@@ -1,22 +1,21 @@
 ## The type of library we want to build. Possible values:
 ##   relocatable
 ##   static
-LIBRARY_TYPE=static
+ATLAS_LIBRARY_TYPE=static
 
 # You may edit this makefile as long as you keep these original 
 # target names defined.
 MODE=debug
 GNATMAKE=@GNATMAKE@
 GNATCLEAN=gnatclean
+GPRINSTALL=@GPRINSTALL@
 SVN=svn
 INSTALL=@INSTALL@
-DYNAMO=dynamo
-LN_S=@LN_S@
-MKDIR=mkdir
-CP=cp
-LN=ln -s
 
+HAVE_GPR=$(shell test -f ${NAME}.gpr && echo 1 || echo 0)
+ifeq (${HAVE_GPR},1)
 GPRPATH:=${NAME}.gpr
+endif
 
 BUILDS_SHARED=@BUILDS_SHARED@
 
@@ -29,6 +28,15 @@ DIST_FILE=atlas-@ATLAS_VERSION@.tar.gz
 HAVE_MYSQL=@ADO_DB_MYSQL@
 HAVE_SQLITE=@ADO_DB_SQLITE@
 HAVE_AWS=@AWA_AWS_STATUS@
+
+DYNAMO=dynamo
+DYNAMO_ARGS=db
+
+LN_S=@LN_S@
+MKDIR=mkdir
+CP=cp
+LN=ln -s
+
 ifeq (${OS},Windows_NT)
 LIBEXT=dll
 LIBVER=dll
@@ -36,63 +44,91 @@ else
 LIBEXT=so
 LIBVER=so.$(version)
 endif
+
 srcdir = .
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 top_builddir = .
-dynamodir=${prefix}/share/dynamo
-includedir=${prefix}/share/ada/adainclude
-projectdir=${prefix}/share/ada/adainclude
+
+# share/ada/adainclude
+infix_inc=@ADA_INC_BASE@
+
+# share/ada/adainclude
+infix_prj=@ADA_PRJ_BASE@
+
+# lib
+infix_lib=@ADA_LIB_BASE@
+
+# lib/ada/adalib
+infix_ali=@ADA_ALI_BASE@
+
+includedir=${prefix}/${infix_inc}
+projectdir=${prefix}/${infix_prj}
 bindir=${prefix}/bin
-libdir=${prefix}/lib
-alidir=${libdir}/ada/adalib/
-MAKE_ARGS=-XMODE=${MODE} -XLIBRARY_TYPE=${LIBRARY_TYPE}
+libdir=${prefix}/${infix_lib}
+alidir=${prefix}/${infix_ali}
+
+dynamodir=${prefix}/share/dynamo
+
+PROCESSORS=@NR_CPUS@
+MAKE_ARGS=-XMODE=${MODE} -XATLAS_LIBRARY_TYPE=${ATLAS_LIBRARY_TYPE} -XPROCESSORS=$(PROCESSORS)
+
 ifeq (${BUILDS_SHARED},yes)
 all:     static shared
-install: install_static install_shared
+install: install_static install_shared install-bin post-install
 else
 all:     static
-install: install_static
+install: install_static install-bin post-install
 endif
+
 # Build executables for all mains defined by the project.
 build: local-build post-build build-tests
+
 local-build: pre-build
 	test ! -f $(GPRPATH) || $(GNATMAKE) -m -p -P "$(GPRPATH)" $(MAKE_ARGS)
+
 build-tests:
 	test ! -f tests.gpr -o ! -d regtests || $(GNATMAKE) -m -p -Ptests $(MAKE_ARGS)
 static:
-	$(MAKE) LIBRARY_TYPE=static build
+	$(MAKE) ATLAS_LIBRARY_TYPE=static build
+
 shared:
-	$(MAKE) LIBRARY_TYPE=relocatable build
+	$(MAKE) ATLAS_LIBRARY_TYPE=relocatable build
+
 # Not intended for manual invocation.
 # Invoked if automatic builds are enabled.
 # Analyzes only on those sources that have changed.
 # Does not build executables.
 autobuild:
 	$(GNATMAKE) -gnatc -c -k  -P "$(GPRPATH)"
+
 # Clean the root project of all build products.
 clean:  pre-clean
-	-$(GNATCLEAN) -q -P "$(GPRPATH)" -XLIBRARY_TYPE=static
-	-$(GNATCLEAN) -q -P "$(GPRPATH)" -XLIBRARY_TYPE=relocatable
+	-rm -rf obj lib
+
 # Clean root project and all imported projects too.
 clean_tree:
 	$(GNATCLEAN) -P "$(GPRPATH)" -r
+
 # Check *all* sources for errors, even those not changed.
 # Does not build executables.
 analyze:
 	$(GNATMAKE) -f  -gnatc -c -k  -P "$(GPRPATH)"
+
 # Clean, then build executables for all mains defined by the project.
 rebuild: clean build
+
 # Rebuild the generated model files
 generate:  post-generate
-	$(DYNAMO) generate $(DYNAMO_ARGS)
+	test ! -d db || $(DYNAMO) generate $(DYNAMO_ARGS)
+
 # Files to package in source distribution
-DISTFILES=README LICENSE.txt NOTICE.txt NEWS CHANGES ChangeLog config.guess configure config.sub \
-configure.in Makefile.in install-sh \
-${NAME}.gpr.in tests.gpr.in config.gpr dynamo.xml \
-src regtests db web bundles config ${NAME}.properties package.xml \
+DISTFILES=README.md LICENSE.txt NOTICE.txt NEWS config.guess configure config.sub \
+configure.ac Makefile.in install-sh aclocal.m4 \
+${NAME}.gpr.in config.gpr dynamo.xml \
+src db web bundles config ${NAME}.properties package.xml \
 distrib bin obj
 dist-prepare:   pre-dist-prepare
 	-rm -rf $(distdir)
@@ -120,60 +156,100 @@ dist:   pre-dist dist-prepare
 	    --exclude=".cproject" --exclude='autom4te.cache' \
 	    --exclude=".gb_project" \
 	    -cvzf $(DIST_FILE) $(distdir)
+
 install_static:
-	$(MAKE) LIBRARY_TYPE=static install_lib
+	$(MAKE) ATLAS_LIBRARY_TYPE=static install_lib
+
 install_shared:
-	$(MAKE) LIBRARY_TYPE=relocatable install_lib
-install_lib:  uninstall pre-install
-	${MKDIR} -p ${includedir}/${NAME}
-	${MKDIR} -p ${projectdir}/
+	$(MAKE) ATLAS_LIBRARY_TYPE=relocatable install_lib
+
+install_lib:  pre-install
+	rm -rf ${dynamodir}/${NAME}
 	${MKDIR} -p ${dynamodir}/${NAME}/config
 	${MKDIR} -p ${dynamodir}/${NAME}/bundles
 	${MKDIR} -p ${dynamodir}/${NAME}/web
 	${MKDIR} -p ${dynamodir}/${NAME}/db
 	${MKDIR} -p ${dynamodir}/${NAME}/db/mysql
 	${MKDIR} -p ${dynamodir}/${NAME}/db/sqlite
-	test ! -d src ||  src/*.ad[bs] ${includedir}/${NAME}
-	test ! -d src/model || ${CP} src/model/*.ad[bs] ${includedir}/${NAME}
-	test ! -f distrib/${GPRPATH} || \
-	    sed -e "s,INSTALL,${prefix},g" \
-	        -e "s,LIBRARY_TYPE,$(LIBRARY_TYPE),g" < distrib/${GPRPATH} > ${projectdir}/${GPRPATH}
 	test ! -d config || ${CP} config/*.xml ${dynamodir}/${NAME}/config/
 	${CP} dynamo.xml ${dynamodir}/${NAME}/dynamo.xml
-	test ! -f MIT-LICENSE.txt || ${CP} MIT-LICENSE.txt ${dynamodir}/${NAME}/MIT-LICENSE.txt
-	test ! -f COPYING3 || ${CP} COPYING3 ${dynamodir}/${NAME}/COPYING3
 	test ! -f NOTICE.txt || ${CP} NOTICE.txt ${dynamodir}/${NAME}/NOTICE.txt
 	test ! -f LICENSE.txt || ${CP} LICENSE.txt ${dynamodir}/${NAME}/LICENSE.txt
+	test ! -f MIT-LICENSE.txt || ${CP} MIT-LICENSE.txt ${dynamodir}/${NAME}/MIT-LICENSE.txt
+	test ! -f COPYING3 || ${CP} COPYING3 ${dynamodir}/${NAME}/COPYING3
+	test ! -f COPYING || ${CP} COPYING ${dynamodir}/${NAME}/COPYING
 	test ! -d bundles || ${CP} bundles/*.properties ${dynamodir}/${NAME}/bundles/
 	test ! -d db || \
 	     (tar --exclude=.svn --exclude='*~' -cf - db)| (cd ${dynamodir}/${NAME}/ && tar xf -)
-	test ! -d lib/${NAME}/${LIBRARY_TYPE} || \
-	     (${MKDIR} -p ${alidir}/${NAME}/$(LIBRARY_TYPE) && \
-	     ${CP} lib/${NAME}/$(LIBRARY_TYPE)/*.ali ${alidir}/${NAME}/$(LIBRARY_TYPE)/)
 	test ! -d web || \
 	     (tar --exclude=.svn --exclude='*~' -cf - web )| (cd ${dynamodir}/${NAME}/ && tar xf -)
-ifeq ($(LIBRARY_TYPE),static)
-	test ! -f lib/${NAME}/$(LIBRARY_TYPE)/${LIBNAME}.a || \
-	     ${CP} lib/${NAME}/$(LIBRARY_TYPE)/${LIBNAME}.a ${libdir}/
+ifneq (${GPRPATH},)
+ifneq (${GPRINSTALL},)
+	$(GPRINSTALL) -p -f --prefix=${prefix} $(MAKE_ARGS) \
+		--build-name=$(ATLAS_LIBRARY_TYPE) $(GPRPATH)
 else
-	test ! -f lib/${NAME}/$(LIBRARY_TYPE)/${LIBNAME}.${LIBVER} || \
-	     (${CP} -p lib/${NAME}/$(LIBRARY_TYPE)/${LIBNAME}.$(LIBVER) ${libdir}/ && \
+	rm -rf ${includedir}/${NAME}
+	rm -f ${projectdir}/${NAME}.gpr
+	rm -rf ${alidir}/${NAME}
+	$(MKDIR) -p ${includedir}/${NAME}
+	$(MKDIR) -p ${projectdir}/
+	test ! -d src || ${CP} src/*.ad[bs] ${includedir}/${NAME}
+	test ! -d src/model || ${CP} src/model/*.ad[bs] ${includedir}/${NAME}
+	test ! -f distrib/${GPRPATH} || \
+	    sed -e "s,INSTALL,${prefix},g" \
+	        -e "s,LIBRARY_TYPE,$(ATLAS_LIBRARY_TYPE),g" < distrib/${GPRPATH} > ${projectdir}/${GPRPATH}
+	test ! -d lib/${NAME}/${ATLAS_LIBRARY_TYPE} || \
+	     (${MKDIR} -p ${alidir}/${NAME}/ && \
+	     ${CP} lib/${NAME}/$(ATLAS_LIBRARY_TYPE)/*.ali ${alidir}/${NAME}/)
+ifeq ($(ATLAS_LIBRARY_TYPE),static)
+	test ! -f lib/${NAME}/$(ATLAS_LIBRARY_TYPE)/${LIBNAME}.a || \
+	     ${CP} lib/${NAME}/$(ATLAS_LIBRARY_TYPE)/${LIBNAME}.a ${libdir}/
+else
+	test ! -f lib/${NAME}/$(ATLAS_LIBRARY_TYPE)/${LIBNAME}.${LIBVER} || \
+	     (${CP} -p lib/${NAME}/$(ATLAS_LIBRARY_TYPE)/${LIBNAME}.$(LIBVER) ${libdir}/ && \
 	      cd ${libdir} && \
 	      rm -f ${LIBNAME}.$(LIBEXT) && \
 	      ${LN} ${LIBNAME}.$(LIBVER) ${LIBNAME}.$(LIBEXT))
 endif
+endif
+endif
+
 uninstall:  pre-uninstall
+	rm -rf ${dynamodir}/${NAME}
+ifneq (${GPRPATH},)
+ifneq (${GPRINSTALL},)
+	-$(GPRINSTALL) -q -f --prefix=${prefix} $(MAKE_ARGS) --uninstall $(GPRPATH)
+else
 	rm -rf ${includedir}/${NAME}
 	rm -f ${libdir}/${LIBNAME}.a
 	rm -f ${libdir}/${LIBNAME}.$(LIBVER)
 	rm -f ${projectdir}/${NAME}.gpr
-	rm -rf ${dynamodir}/${NAME}
 	rm -rf ${alidir}/${NAME}
+endif
+endif
+
+install-bin:
+ifneq (${EXECS},)
+	$(INSTALL) -m 755 $(EXECS) ${bindir}/
+endif
+
 pre-clean:
 pre-build:
 pre-install:
 pre-uninstall:
-pre-dist-prepare:
 pre-dist:
+pre-dist-prepare:
 post-build:
+post-install:
 post-generate:
+
+install-info:
+ifeq (${GPRINSTALL},)
+	@echo "Installation directories:"
+	@echo "  Ada source files:    ${includedir}"
+	@echo "  ALI files:           ${alidir}"
+	@echo "  Libraries:           ${libdir}"
+	@echo "  GNAT project:        ${projectdir}"
+endif
+	@echo "Environment setup:"
+	@echo "  export ADA_PROJECT_PATH=${projectdir}:$$ADA_PROJECT_PATH"
