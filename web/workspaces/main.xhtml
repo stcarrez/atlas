@@ -64,6 +64,8 @@
                   </div>
                   <h2>Blogs</h2>
                   <ui:include src="/blogs/admin/lists/menu-list.xhtml"/>
+                  <h2>Documents</h2>
+                  <ui:include src="/storages/views/storage-nav.xhtml"/>
                   <h2>Wikis</h2>
                   <h:panelGroup rendered="#{adminWiki.wikis.count != 0}">
                       <ui:include src="/wikis/views/wiki-nav.xhtml">
