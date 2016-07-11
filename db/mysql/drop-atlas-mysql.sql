@@ -7,9 +7,6 @@ DROP TABLE IF EXISTS `mblog`;
 DROP TABLE IF EXISTS `awa_wiki_space`;
 DROP TABLE IF EXISTS `awa_wiki_page`;
 DROP TABLE IF EXISTS `awa_wiki_content`;
-/* Copied from awa-jobs-drop-mysql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS `awa_job`;
 /* Copied from awa-votes-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_vote`;
@@ -21,6 +18,9 @@ DROP TABLE IF EXISTS `awa_answer`;
 /* Copied from awa-images-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_image`;
+/* Copied from awa-jobs-drop-mysql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS `awa_job`;
 /* Copied from awa-storages-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_store_local`;
