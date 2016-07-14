@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  Atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013 Stephane Carrez
+--  Copyright (C) 2011, 2012, 2013, 2016 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,17 +21,29 @@ with Util.Log.Loggers;
 
 with ASF.Server.Web;
 
+with AWA.Setup.Applications;
+
 with Atlas.Applications;
 procedure Atlas.Server is
 
    Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
    App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
    WS      : ASF.Server.Web.AWS_Container;
+
+   procedure Setup is
+      S : AWA.Setup.Applications.Application;
+   begin
+      S.Setup ("atlas.properties", WS);
+   end Setup;
+		     
 begin
+   --  WS.Configure (Configure'Access);
+   WS.Start;
+   Setup;
    Atlas.Applications.Initialize (App);
    WS.Register_Application (Atlas.Applications.CONTEXT_PATH, App.all'Access);
    Log.Info ("Connect you browser to: http://localhost:8080/atlas/index.html");
-   WS.Start;
+   --  WS.Start;
    delay 365.0 * 24.0 * 3600.0;
    App.Close;
 exception
