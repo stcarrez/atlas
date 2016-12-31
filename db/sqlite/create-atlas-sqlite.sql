@@ -281,8 +281,8 @@ CREATE TABLE awa_counter (
   `date` DATE NOT NULL,
   /* the counter value. */
   `counter` INTEGER NOT NULL,
-  /* the definition id. */
-  `definition_id` INTEGER NOT NULL,
+  /* the counter definition identifier. */
+  `definition_id` BIGINT NOT NULL,
   PRIMARY KEY (`object_id`, `date`, `definition_id`)
 );
 /* A counter definition defines what the counter represents. It uniquely identifies
@@ -292,13 +292,28 @@ CREATE TABLE awa_counter_definition (
   /* the counter name. */
   `name` VARCHAR(255) NOT NULL,
   /* the counter unique id. */
-  `id` BIGINT NOT NULL,
-  /*  */
+  `id` INTEGER NOT NULL,
+  /* the optional entity type that identifies the database table. */
   `entity_type` INTEGER ,
   PRIMARY KEY (`id`)
 );
+/*  */
+CREATE TABLE awa_visit (
+  /* the entity identifier. */
+  `object_id` BIGINT NOT NULL,
+  /* the number of times the entity was visited by the user. */
+  `counter` INTEGER NOT NULL,
+  /* the date and time when the entity was last visited. */
+  `date` DATETIME NOT NULL,
+  /* the user who visited the entity. */
+  `user` BIGINT NOT NULL,
+  /* the counter definition identifier. */
+  `definition_id` BIGINT NOT NULL,
+  PRIMARY KEY (`object_id`, `user`, `definition_id`)
+);
 INSERT INTO entity_type (name) VALUES ("awa_counter");
 INSERT INTO entity_type (name) VALUES ("awa_counter_definition");
+INSERT INTO entity_type (name) VALUES ("awa_visit");
 /* Copied from awa-blogs-sqlite.sql*/
 /* File generated automatically by dynamo */
 /*  */
@@ -597,7 +612,7 @@ CREATE TABLE awa_vote (
   `entity_id` BIGINT NOT NULL,
   /*  */
   `user_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`, `entity_id`, `user_id`)
 );
 INSERT INTO entity_type (name) VALUES ("awa_rating");
 INSERT INTO entity_type (name) VALUES ("awa_vote");
