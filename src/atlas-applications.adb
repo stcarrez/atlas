@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------
 --  atlas -- atlas applications
 -----------------------------------------------------------------------
---  Copyright (C) 2012, 2013, 2014, 2015 Stephane Carrez
+--  Copyright (C) 2012, 2013, 2014, 2015, 2016 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,17 +17,14 @@
 --  limitations under the License.
 -----------------------------------------------------------------------
 
-with Ada.IO_Exceptions;
 with GNAT.MD5;
 
 with Util.Log.Loggers;
-with Util.Properties;
 with Util.Beans.Basic;
 with Util.Strings.Transforms;
 
 with EL.Functions;
 
-with ASF.Applications;
 with ASF.Applications.Main;
 
 with ADO.Queries;
@@ -121,21 +118,12 @@ package body Atlas.Applications is
    --     <li>Define the servlet and filter mappings.
    --  </ul>
    --  ------------------------------
-   procedure Initialize (App : in Application_Access) is
+   procedure Initialize (App    : in Application_Access;
+                         Config : in ASF.Applications.Config) is
       Fact  : AWA.Applications.Factory.Application_Factory;
-      C     : ASF.Applications.Config;
    begin
       App.Self := App;
-      begin
-         C.Load_Properties ("atlas.properties");
-         Util.Log.Loggers.Initialize (Util.Properties.Manager (C));
-
-      exception
-         when Ada.IO_Exceptions.Name_Error =>
-            Log.Error ("Cannot read application configuration file {0}", CONFIG_PATH);
-      end;
-      App.Initialize (C, Fact);
-
+      App.Initialize (Config, Fact);
       App.Set_Global ("contextPath", CONTEXT_PATH);
    end Initialize;
 
