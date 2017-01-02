@@ -27,6 +27,7 @@ with ASF.Servlets.Measures;
 
 with ASF.Security.Servlets;
 with ASF.Converters.Sizes;
+with ASF.Applications;
 
 with AWA.Users.Servlets;
 with AWA.Users.Modules;
@@ -69,7 +70,8 @@ package Atlas.Applications is
    type Application_Access is access all Application'Class;
 
    --  Initialize the application.
-   procedure Initialize (App : in Application_Access);
+   procedure Initialize (App    : in Application_Access;
+                         Config : in ASF.Applications.Config);
 
    --  Initialize the ASF components provided by the application.
    --  This procedure is called by <b>Initialize</b>.
