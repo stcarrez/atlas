@@ -34,6 +34,11 @@ procedure Atlas.Server is
    App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
    WS      : ASF.Server.Web.AWS_Container;
 
+   procedure Setup is
+     new AWA.Setup.Applications.Configure (Atlas.Applications.Application'Class,
+                                           Atlas.Applications.Application_Access,
+                                           Atlas.Applications.Initialize);
+
    procedure Configure (Config : in out AWS.Config.Object) is
    begin
       AWS.Config.Set.Input_Line_Size_Limit (1_000_000);
@@ -43,20 +48,14 @@ procedure Atlas.Server is
       AWS.Config.Set.Upload_Size_Limit (Config, 100_000_000);
    end Configure;
 
-   procedure Setup is
-      S : AWA.Setup.Applications.Application;
-   begin
-      S.Setup ("atlas.properties", WS);
-   end Setup;
-
 begin
    WS.Configure (Configure'Access);
    WS.Start;
-   Setup;
-   Atlas.Applications.Initialize (App);
-   WS.Register_Application (Atlas.Applications.CONTEXT_PATH, App.all'Access);
-   Log.Info ("Connect you browser to: http://localhost:8080/atlas/index.html");
-   delay 365.0 * 24.0 * 3600.0;
+   Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
+             Atlas.Applications.CONTEXT_PATH);
+   Setup (WS, App, "atlas.properties", Atlas.Applications.CONTEXT_PATH);
+   --  delay 365.0 * 24.0 * 3600.0;
+   delay 60.0;
    App.Close;
 exception
    when E : others =>
