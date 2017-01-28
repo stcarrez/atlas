@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  Atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013, 2016 Stephane Carrez
+--  Copyright (C) 2011, 2012, 2013, 2016, 2017 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,6 @@ with Util.Log.Loggers;
 
 with AWS.Config.Set;
 with ASF.Server.Web;
-with AWA.Setup.Applications;
-
 with AWA.Setup.Applications;
 
 with Atlas.Applications;
