@@ -720,7 +720,7 @@ CREATE TABLE atlas_review (
   /* the review title. */
   `title` VARCHAR(255) NOT NULL,
   /* the review description */
-  `text` VARCHAR(65535) NOT NULL,
+  `text` TEXT NOT NULL,
   /* the review creation date. */
   `create_date` DATETIME NOT NULL,
   /* whether comments are allowed. */
