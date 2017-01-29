@@ -23,6 +23,12 @@
     <property name="entity_id">1</property>
   </on-event>
 
+  <!--  When a user is created, create the blog object.  -->
+  <on-event name="user-create" queue="job-queue">
+    <action>#{blog.create_default}</action>
+    <property name="name">Blog</property>
+  </on-event>
+
   <managed-bean>
     <description>Bean used to create a new permission for the current user.</description>
     <managed-bean-name>permission</managed-bean-name>
