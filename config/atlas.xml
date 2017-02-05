@@ -23,6 +23,12 @@
     <property name="entity_id">1</property>
   </on-event>
 
+  <!--  When a user is created, post a micro-blog message.  -->
+  <on-event name="user-create">
+    <action>#{miniPost.post_event}</action>
+    <property name="message">Hello, I'm joining the community!</property>
+  </on-event>
+
   <!--  When a user is created, create the blog object.  -->
   <on-event name="user-create" queue="job-queue">
     <action>#{blog.create_default}</action>
