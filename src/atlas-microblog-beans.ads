@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-microblog-beans -- Beans for module microblog
---  Copyright (C) 2012 Stephane Carrez
+--  Copyright (C) 2012, 2017 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@ with Ada.Strings.Unbounded;
 with Util.Beans.Basic;
 with Util.Beans.Objects;
 with Util.Beans.Methods;
+with AWA.Events;
 with Atlas.Microblog.Modules;
 with Atlas.Microblog.Models;
 package Atlas.Microblog.Beans is
@@ -51,6 +52,10 @@ package Atlas.Microblog.Beans is
    --  Post the microblog
    procedure Post (Bean    : in out Microblog_Bean;
                    Outcome : in out Ada.Strings.Unbounded.Unbounded_String);
+
+   --  Post a message when some event is received.
+   procedure Post (Bean    : in out Microblog_Bean;
+                   Event   : in AWA.Events.Module_Event'Class);
 
    --  Create the Microblog_Bean bean instance.
    function Create_Microblog_Bean (Module : in Atlas.Microblog.Modules.Microblog_Module_Access)
