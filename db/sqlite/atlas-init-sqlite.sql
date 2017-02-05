@@ -1,6 +1,6 @@
-PRAGMA synchronous = OFF;
-PRAGMA journal_mode = MEMORY;
-BEGIN TRANSACTION;
+INSERT INTO `awa_workspace` VALUES (1,1,'2012-05-22 19:54:36',1),(101,1,'2012-05-22 20:39:15',101),(102,1,'2012-05-23 18:24:42',102),(103,1,'2012-05-25 12:29:01',104),(104,1,'2012-05-25 12:46:46',105),(105,1,'2012-05-25 18:34:40',106),(106,1,'2012-05-26 05:47:00',107),(107,1,'2012-05-30 17:14:10',108),(108,1,'2012-06-10 02:43:17',109),(109,1,'2012-06-13 18:37:14',110),(110,1,'2012-06-15 10:15:54',111),(111,1,'2012-06-21 10:58:46',112),(112,1,'2012-06-21 18:25:05',113),(113,1,'2012-06-29 01:18:09',114),(201,1,'2012-07-29 21:28:28',201),(202,1,'2012-07-31 22:19:14',202),(301,1,'2012-08-14 06:56:59',301),(302,1,'2012-08-17 12:04:08',303),(303,1,'2012-08-23 05:06:09',304),(304,1,'2012-08-26 18:44:36',305),(305,1,'2012-09-03 18:31:22',306),(306,1,'2012-10-18 19:02:37',307),(307,1,'2012-11-04 17:01:40',309),(308,1,'2012-12-29 06:07:25',310),(401,1,'2013-02-06 22:54:16',401),(501,1,'2013-02-12 21:27:54',501),(601,1,'2013-02-21 16:20:23',601),(602,1,'2013-04-24 12:22:43',602),(603,1,'2013-06-09 07:58:50',603),(604,1,'2013-06-09 10:49:14',604),(605,1,'2013-06-23 00:01:59',605),(701,1,'2013-07-22 18:24:53',701),(801,1,'2013-09-23 17:09:26',802),(802,1,'2013-09-24 13:58:10',803),(901,1,'2014-01-05 18:33:51',901),(1001,1,'2014-02-20 02:44:06',1001),(1002,1,'2014-03-06 06:50:21',1002),(1101,1,'2014-05-31 12:47:07',1101),(1201,1,'2014-05-31 12:59:33',1201),(1202,1,'2014-05-31 13:02:25',1202),(1301,1,'2014-11-11 17:41:10',1310),(1401,1,'2015-10-15 10:17:07',1601),(1402,1,'2015-11-28 11:40:57',1602),(1501,1,'2016-05-28 20:49:33',1801),(1601,1,'2016-08-31 19:36:34',1901);
+INSERT INTO `awa_tag` VALUES (1,'demo'),(2,'release'),(3,'Ada'),(101,'releasse'),(201,'Atlas'),(202,'Demo'),(203,'Installation'),(301,'syntax'),(302,'MediaWiki'),(401,'Images'),(402,'AWA'),(501,'Wiki');
+INSERT INTO `awa_tagged_entity` VALUES (1,1,14,1),(2,2,14,2),(3,2,14,3),(4,101,14,2),(5,101,14,3),(6,401,14,2),(7,401,14,3),(8,101,27,3),(101,701,14,3),(102,701,14,101),(201,1,32,201),(202,1,32,202),(203,1,32,203),(204,2,32,201),(301,101,32,301),(302,101,32,302),(401,101,32,401),(402,2,32,402),(501,801,14,3),(502,801,14,402),(503,801,14,201),(504,801,14,501);
 INSERT INTO `awa_wiki_content` VALUES (1,'2015-12-21 20:19:19','This page explains how you can install the Atlas demonstrator.
 
 == Configure ==
@@ -1916,8 +1916,35 @@ INSERT INTO `awa_wiki_space` VALUES (1,'Atlas',1,5,'2015-12-05 16:13:02','[Main]
 [Installation]
 
 [Syntax MediaWiki]','',2,1);
-END TRANSACTION;
-INSERT INTO `sequence` VALUES
-('awa_wiki_page',2,201,100),
-('awa_wiki_content',6,601,100);
+INSERT INTO `sequence` VALUES ('awa_message_type',3,301,100),('awa_email',21,2101,100),('awa_user',21,2101,100),('awa_session',40,4001,100),('awa_workspace',17,1701,100),('awa_acl',18,1801,100),('awa_blog',5,501,100),('mblog',15,1501,100),('awa_post',9,901,100),('awa_access_key',13,1301,100),('awa_queue',1,101,100),('awa_question',3,301,100),('awa_answer',3,301,100),('awa_rating',3,301,100),('awa_vote',4,401,100),('awa_storage_folder',7,701,100),('awa_storage',5,501,100),('awa_storage_data',5,501,100),('awa_tag',6,601,100),('awa_tagged_entity',6,601,100),('atlas_review',3,301,100),('awa_image',1,101,100),('awa_counter_definition',2,201,100),('awa_wiki_page',2,201,100),('awa_wiki_content',6,601,100),('awa_job',6,601,100),('awa_message',6,601,100);
+INSERT INTO "awa_user" (first_name, last_name, password, open_id, country, name, version, id, email_id)
+   VALUES('','','','Nobody','','Atlas Installator',1,1,1);
+INSERT INTO "awa_email" (email, status, last_error_date, version, id, user_id)
+   VALUES (1,2,'Atlas@earth.world',1,0,'0000-00-00 00:00:00');
+INSERT INTO "awa_blog" (id, version, name, uid, create_date, workspace_id, update_date, url)
+   VALUES (1,1,'Java 2 Ada','','2012-05-22 19:55:24',1,'0000-00-00 00:00:00','');
+INSERT INTO "awa_post" (id, version, title, uri, text, create_date, publish_date, status, author_id, blog_id,
+   allow_comments, read_count)
+   VALUES (1,7,'Welcome to Atlas, the Ada Web Application demonstrator',
+'2014/03/16/Welcome-to-Atlas-the-Ada-Web-Application-demonstrator',
+'__Atlas__ is a demonstration application implemented using the [AWA|https://github.com/stcarrez/ada-awa] framework.
+The Atlas application features:
+
+* User registration through Google+, Facebook or classical email/password registration mechanisms,
+* A microblog shared among all users,
+* A blog system allowing users to post articles displayed on this public page,
+* A Q&A forum area to post questions and get answers,
+* A Wiki environment to share online documentation.
+
+This application will evolve while new AWA plugins are added. 
+
+Feel free to try this application to see and discover AWA capabilities.  [Connect to Atlas|http://demo.vacs.fr/atlas/auth/login.html]
+
+Enjoy,
+
+Stephane
+
+','2012-05-22 20:08:47','2017-02-04 22:41:44',1,1,1,0,1916);
+
+UPDATE awa_wiki_content SET author_id = 1;
 
