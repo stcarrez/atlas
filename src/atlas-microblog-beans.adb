@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-microblog-beans -- Beans for module microblog
---  Copyright (C) 2012 Stephane Carrez
+--  Copyright (C) 2012, 2017 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ with ADO.Sessions;
 with ADO.Queries;
 
 with ASF.Events.Faces.Actions;
+with AWA.Events.Action_Method;
 package body Atlas.Microblog.Beans is
 
    --  ------------------------------
@@ -32,13 +33,27 @@ package body Atlas.Microblog.Beans is
       Outcome := Ada.Strings.Unbounded.To_Unbounded_String ("post-response");
    end Post;
 
+   --  ------------------------------
+   --  Post a message when some event is received.
+   --  ------------------------------
+   procedure Post (Bean    : in out Microblog_Bean;
+                   Event   : in AWA.Events.Module_Event'Class) is
+   begin
+      Bean.Module.Create (Bean.Post);
+   end Post;
+
    package Action_Binding is
      new ASF.Events.Faces.Actions.Action_Method.Bind (Bean   => Microblog_Bean,
                                                       Method => Post,
                                                       Name   => "post");
 
+   package Event_Action_Binding is
+     new AWA.Events.Action_Method.Bind (Bean   => Microblog_Bean,
+                                        Method => Post,
+                                        Name   => "post_event");
+
    Microblog_Bean_Binding : aliased constant Util.Beans.Methods.Method_Binding_Array
-     := (Action_Binding.Proxy'Access, null);
+     := (Action_Binding.Proxy'Access, Event_Action_Binding.Proxy'Access);
 
    --  ------------------------------
    --  Get the value identified by the name.
