@@ -51,7 +51,7 @@ begin
    WS.Start;
    Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
              Atlas.Applications.CONTEXT_PATH);
-   Setup (WS, App, "atlas.properties", Atlas.Applications.CONTEXT_PATH);
+   Setup (WS, App, "atlas", Atlas.Applications.CONTEXT_PATH);
    delay 365.0 * 24.0 * 3600.0;
    App.Close;
 exception
