@@ -11,4 +11,8 @@ RUN mkdir -p /usr/src \
    && make -s \
    && make -s install
 
-WORKDIR /app
+WORKDIR /usr/src/atlas
+
+EXPOSE 8080
+CMD ["/usr/src/atlas/bin/atlas-server"]
+
