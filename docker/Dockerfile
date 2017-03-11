@@ -9,6 +9,7 @@ RUN mkdir -p /usr/src \
    && cd atlas \
    && ./configure --prefix=/usr \
    && make -s \
+   && make -s generate \
    && make -s install
 
 WORKDIR /usr/src/atlas
