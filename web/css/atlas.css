@@ -69,9 +69,13 @@ div.message img {
 #atlas-user-stat {
     padding-left: 2%;
     padding-right: 2%;
-    width: 30%;
+    width: 98%;
     clear: none;
     float: right;
+    margin-bottom: 1em;
+}
+#atlas-user-stat .ui-panel-header, #atlas-user-stat .ui-panel-content {
+    width: 98%;
 }
 div.blog-admin {
     width: 40%;
@@ -135,8 +139,11 @@ li.atlas-action {
     height: 40px;
     line-height: 20px;
 }
+div.ui-panel {
+    width: 99%;
+}
 div.ui-panel, div.ui-panel-content {
-    overflow: auto;
+    overflow: hidden;
 }
 div.likes {
     float: left;
