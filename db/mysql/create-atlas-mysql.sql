@@ -83,6 +83,66 @@ CREATE TABLE awa_queue (
   `name` VARCHAR(255) BINARY NOT NULL,
   PRIMARY KEY (`id`)
 );
+/* The application that is granted access to the database.
+ */
+CREATE TABLE awa_application (
+  /* the application identifier. */
+  `id` BIGINT NOT NULL,
+  /* the application name. */
+  `name` VARCHAR(255) BINARY NOT NULL,
+  /* the application secret key. */
+  `secret_key` VARCHAR(255) BINARY NOT NULL,
+  /* the application public identifier. */
+  `client_id` VARCHAR(255) BINARY NOT NULL,
+  /* the optimistic lock version. */
+  `version` INTEGER NOT NULL,
+  /* the application create date. */
+  `create_date` DATETIME NOT NULL,
+  /* the application update date. */
+  `update_date` DATETIME NOT NULL,
+  /* the application title displayed in the OAuth login form. */
+  `title` VARCHAR(255) BINARY NOT NULL,
+  /* the application description. */
+  `description` VARCHAR(255) BINARY NOT NULL,
+  /* the optional login URL. */
+  `app_login_url` VARCHAR(255) BINARY NOT NULL,
+  /* the application logo URL. */
+  `app_logo_url` VARCHAR(255) BINARY NOT NULL,
+  /*  */
+  `user_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+/*  */
+CREATE TABLE awa_callback (
+  /*  */
+  `id` BIGINT NOT NULL,
+  /*  */
+  `url` VARCHAR(255) BINARY NOT NULL,
+  /* the optimistic lock version. */
+  `version` INTEGER NOT NULL,
+  /*  */
+  `application_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+/* The session is created when the user has granted an access to an application
+or when the application has refreshed its access token. */
+CREATE TABLE awa_oauth_session (
+  /* the session identifier. */
+  `id` BIGINT NOT NULL,
+  /* the session creation date. */
+  `create_date` DATETIME NOT NULL,
+  /* a random salt string to access/request token generation. */
+  `salt` VARCHAR(255) BINARY NOT NULL,
+  /* the expiration date. */
+  `expire_date` DATETIME NOT NULL,
+  /* the application that is granted access. */
+  `application_id` BIGINT NOT NULL,
+  /*  */
+  `user_id` BIGINT NOT NULL,
+  /*  */
+  `session_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+);
 /* The ACL table records permissions which are granted for a user to access a given database entity. */
 CREATE TABLE awa_acl (
   /* the ACL identifier */
@@ -171,6 +231,8 @@ CREATE TABLE awa_user (
   `version` INTEGER NOT NULL,
   /* the user identifier. */
   `id` BIGINT NOT NULL,
+  /* the password salt. */
+  `salt` VARCHAR(255) BINARY NOT NULL,
   /*  */
   `email_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
@@ -179,6 +241,9 @@ INSERT INTO entity_type (name) VALUES
 ("awa_message")
 ,("awa_message_type")
 ,("awa_queue")
+,("awa_application")
+,("awa_callback")
+,("awa_oauth_session")
 ,("awa_acl")
 ,("awa_access_key")
 ,("awa_email")
@@ -187,6 +252,30 @@ INSERT INTO entity_type (name) VALUES
 ;
 /* Copied from awa-workspaces-mysql.sql*/
 /* File generated automatically by dynamo */
+/*  */
+CREATE TABLE awa_invitation (
+  /* the invitation identifier. */
+  `id` BIGINT NOT NULL,
+  /* version optimistic lock. */
+  `version` INTEGER NOT NULL,
+  /* date when the invitation was created and sent. */
+  `create_date` DATETIME NOT NULL,
+  /* the email address to which the invitation was sent. */
+  `email` VARCHAR(255) BINARY NOT NULL,
+  /* the invitation message. */
+  `message` text NOT NULL,
+  /* the date when the invitation was accepted. */
+  `acceptance_date` DATETIME ,
+  /* the workspace where the user is invited. */
+  `workspace_id` BIGINT NOT NULL,
+  /*  */
+  `access_key_id` BIGINT ,
+  /* the user being invited. */
+  `invitee_id` BIGINT ,
+  /*  */
+  `inviter_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+);
 /* The workspace controls the features available in the application
 for a set of users: the workspace members.  A user could create
 several workspaces and be part of several workspaces that other
@@ -224,7 +313,8 @@ CREATE TABLE awa_workspace_member (
   PRIMARY KEY (`id`)
 );
 INSERT INTO entity_type (name) VALUES
-("awa_workspace")
+("awa_invitation")
+,("awa_workspace")
 ,("awa_workspace_feature")
 ,("awa_workspace_member")
 ;
@@ -631,12 +721,10 @@ CREATE TABLE awa_vote (
   /*  */
   `rating` INTEGER NOT NULL,
   /*  */
-  `id` BIGINT NOT NULL,
-  /*  */
   `entity_id` BIGINT NOT NULL,
   /*  */
   `user_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`, `entity_id`, `user_id`)
+  PRIMARY KEY (`entity_id`, `user_id`)
 );
 INSERT INTO entity_type (name) VALUES
 ("awa_rating")
