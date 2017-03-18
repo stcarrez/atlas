@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/http/jenkins.vacs.fr/Atlas.svg)](http://jenkins.vacs.fr/job/Atlas/)
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/atlas/v1.0.0.svg)
+![Commits](https://img.shields.io/github/commits-since/stcarrez/atlas/1.0.0.svg)
 
 Atlas is an online application that provides a blogging system, a question & answer area,
 a wiki space and a document storage space.  It shows the different plugins and features provided by
