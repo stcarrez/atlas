@@ -21,6 +21,7 @@
     <action>#{permission.create}</action>
     <property name="entity_type">awa_wiki_space</property>
     <property name="entity_id">1</property>
+    <property name="workspace_id">1</property>
   </on-event>
 
   <!--  When a user is created, post a micro-blog message.  -->
