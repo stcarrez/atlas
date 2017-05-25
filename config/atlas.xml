@@ -22,6 +22,7 @@
     <property name="entity_type">awa_wiki_space</property>
     <property name="entity_id">1</property>
     <property name="workspace_id">1</property>
+    <property name="permission">wiki-page-create,wiki-page-update,wiki-page-delete,wiki-page-view,wiki-space-delete,wiki-space-update</property>
   </on-event>
 
   <!--  When a user is created, post a micro-blog message.  -->
