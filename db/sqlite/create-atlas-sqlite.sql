@@ -150,8 +150,22 @@ CREATE TABLE awa_acl (
   `writeable` TINYINT NOT NULL,
   /*  */
   `user_id` BIGINT NOT NULL,
+  /*  */
+  `workspace_id` BIGINT NOT NULL,
   /* the entity type concerned by the ACL. */
   `entity_type` INTEGER NOT NULL,
+  /* the permission that is granted. */
+  `permission` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+);
+/* The permission table lists all the application permissions that are defined.
+This is a system table shared by every user and workspace.
+The list of permission is fixed and never changes. */
+CREATE TABLE awa_permission (
+  /* the permission database identifier. */
+  `id` BIGINT NOT NULL,
+  /* the permission name */
+  `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
 /*  */
@@ -164,6 +178,8 @@ CREATE TABLE awa_access_key (
   `id` BIGINT NOT NULL,
   /*  */
   `version` INTEGER NOT NULL,
+  /* the access key type. */
+  `kind` TINYINT NOT NULL,
   /*  */
   `user_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
@@ -241,6 +257,7 @@ INSERT INTO entity_type (name) VALUES ("awa_application");
 INSERT INTO entity_type (name) VALUES ("awa_callback");
 INSERT INTO entity_type (name) VALUES ("awa_oauth_session");
 INSERT INTO entity_type (name) VALUES ("awa_acl");
+INSERT INTO entity_type (name) VALUES ("awa_permission");
 INSERT INTO entity_type (name) VALUES ("awa_access_key");
 INSERT INTO entity_type (name) VALUES ("awa_email");
 INSERT INTO entity_type (name) VALUES ("awa_session");
@@ -269,6 +286,8 @@ CREATE TABLE awa_invitation (
   `invitee_id` BIGINT ,
   /*  */
   `inviter_id` BIGINT NOT NULL,
+  /*  */
+  `member_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 );
 /* The workspace controls the features available in the application
@@ -297,10 +316,15 @@ CREATE TABLE awa_workspace_feature (
   PRIMARY KEY (`id`)
 );
 /* The workspace member indicates the users who
-are part of the workspace. */
+are part of the workspace. The join_date is NULL when
+a user was invited but has not accepted the invitation. */
 CREATE TABLE awa_workspace_member (
   /*  */
   `id` BIGINT NOT NULL,
+  /* the date when the user has joined the workspace. */
+  `join_date` DATETIME ,
+  /* the member role. */
+  `role` VARCHAR(255) NOT NULL,
   /*  */
   `member_id` BIGINT NOT NULL,
   /*  */

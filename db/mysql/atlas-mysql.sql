@@ -13,7 +13,7 @@ CREATE TABLE mblog (
   /* the post author */
   `author_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /* the table that contains the reviews made by users. */
 CREATE TABLE atlas_review (
   /* the review identifier */
@@ -33,7 +33,7 @@ CREATE TABLE atlas_review (
   /*  */
   `reviewer_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO entity_type (name) VALUES
 ("mblog")
 ,("atlas_review")
