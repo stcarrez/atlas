@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------
 --  atlas -- atlas applications
 -----------------------------------------------------------------------
---  Copyright (C) 2012, 2013, 2014, 2015, 2016 Stephane Carrez
+--  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2017 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,7 +69,7 @@ package body Atlas.Applications is
             Atlas.Applications.Models.List (List, Session, Query);
 
             Result := new Atlas.Applications.Models.User_Stat_Info;
-            Result.all := List.List.Element (0);
+            Result.all := List.List.Element (1);
          end;
       else
          Result := new Atlas.Applications.Models.User_Stat_Info;
