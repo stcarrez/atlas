@@ -95,7 +95,7 @@ package body Atlas.Applications.Models is
 
       Stmt : ADO.Statements.Query_Statement
           := Session.Create_Statement (Context);
-      Pos  : Natural := 0;
+      Pos  : Positive := 1;
       procedure Read (Into : in out User_Stat_Info) is
       begin
          Into.Post_Count := Stmt.Get_Integer (0);
