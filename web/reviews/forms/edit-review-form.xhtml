@@ -11,15 +11,18 @@
             </div>
             <w:inputText styleClass="awa-required"
                          id='title' size='50' required='true' value='#{review.title}'
-                         title='Title'/>
+                         placeholder="#{reviewMsg.review_title_placeholder}"
+                         title='#{reviewMsg.review_title_label}'/>
             <w:inputText styleClass="awa-required"
                          id='site' size='50' required='true' value='#{review.site}'
-                         title='Site'/>
+                         placeholder="#{reviewMsg.review_site_placeholder}"
+                         title='#{reviewMsg.review_site_label}'/>
             <dl class='awa-required'>
               <dt><label for='text'>Review text</label></dt>
               <dd>
                  <h:inputTextarea id='text' rows='20' required='true'
-                     value='#{review.text}'/>
+                                  placeholder="#{reviewMsg.review_text_placeholder}"
+                                  value='#{review.text}'/>
               </dd>
             </dl>
             <ul class='awa-buttons'>
