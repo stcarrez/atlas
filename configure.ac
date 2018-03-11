@@ -16,7 +16,6 @@ AM_GNAT_CHECK_GPRBUILD
 AM_GNAT_CHECK_INSTALL
 
 # checking for local tools
-AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_PROG_LN_S
@@ -94,6 +93,17 @@ AM_GNAT_FIND_PROJECT([ada-asf],[Ada Server Faces Library],[asf],
     ASF_DIR=${gnat_project_dir_asf}
   ])
 AC_SUBST(ASF_DIR)
+
+##########################################
+# Ada Servlet library
+##########################################
+AM_GNAT_FIND_PROJECT([ada-servlet],[Ada Servlet Library],[servlet],
+  [git@github.com:stcarrez/ada-servlet.git],
+  [Building Atlas requires the Ada Servlet Library.],
+  [
+    SERVLET_DIR=${gnat_project_dir_servlet}
+  ])
+AC_SUBST(SERVLET_DIR)
 
 ##########################################
 # Ada Database Objects library
