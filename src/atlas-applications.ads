@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------
 --  atlas -- atlas applications
 -----------------------------------------------------------------------
---  Copyright (C) 2012, 2013, 2014, 2015, 2016 Stephane Carrez
+--  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,11 @@
 with Util.Beans.Objects;
 
 with ASF.Servlets.Faces;
-with ASF.Servlets.Files;
+with Servlet.Core.Files;
 with ASF.Servlets.Ajax;
 with ASF.Filters.Dump;
 with ASF.Filters.Cache_Control;
-with ASF.Servlets.Measures;
+with Servlet.Core.Measures;
 
 with ASF.Security.Servlets;
 with ASF.Converters.Sizes;
@@ -104,10 +104,10 @@ private
       --  Application servlets and filters (add new servlet and filter instances here).
       Faces             : aliased ASF.Servlets.Faces.Faces_Servlet;
       Ajax              : aliased ASF.Servlets.Ajax.Ajax_Servlet;
-      Files             : aliased ASF.Servlets.Files.File_Servlet;
+      Files             : aliased Servlet.Core.Files.File_Servlet;
       Dump              : aliased ASF.Filters.Dump.Dump_Filter;
       Service_Filter    : aliased AWA.Services.Filters.Service_Filter;
-      Measures          : aliased ASF.Servlets.Measures.Measure_Servlet;
+      Measures          : aliased Servlet.Core.Measures.Measure_Servlet;
       No_Cache          : aliased ASF.Filters.Cache_Control.Cache_Control_Filter;
 
       --  Authentication servlet and filter.
