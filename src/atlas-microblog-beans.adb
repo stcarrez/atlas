@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-microblog-beans -- Beans for module microblog
---  Copyright (C) 2012, 2017 Stephane Carrez
+--  Copyright (C) 2012, 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,6 +38,7 @@ package body Atlas.Microblog.Beans is
    --  ------------------------------
    procedure Post (Bean    : in out Microblog_Bean;
                    Event   : in AWA.Events.Module_Event'Class) is
+      pragma Unreferenced (Event);
    begin
       Bean.Module.Create (Bean.Post);
    end Post;
