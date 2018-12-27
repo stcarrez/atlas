@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
---  Atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013, 2016, 2017 Stephane Carrez
+--  atlas-server -- Application server
+--  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ with Ada.Exceptions;
 
 with Util.Log.Loggers;
 
+with AWS.Net.SSL;
 with AWS.Config.Set;
 with ASF.Server.Web;
 with AWA.Setup.Applications;
@@ -51,6 +52,12 @@ begin
    WS.Start;
    Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
              Atlas.Applications.CONTEXT_PATH);
+   if not AWS.Net.SSL.Is_Supported then
+      Log.Error ("SSL is not supported by AWS.");
+      Log.Error ("SSL is required for the OAuth2/OpenID connector to "
+                 & "connect to OAuth2/OpenID providers.");
+      Log.Error ("Please, rebuild AWS with SSL support.");
+   end if;
    Setup (WS, App, "atlas", Atlas.Applications.CONTEXT_PATH);
    delay 365.0 * 24.0 * 3600.0;
    App.Close;
