@@ -5,7 +5,7 @@
 --  Template used: templates/model/package-spec.xhtml
 --  Ada Generator: https://ada-gen.googlecode.com/svn/trunk Revision 1095
 -----------------------------------------------------------------------
---  Copyright (C) 2017 Stephane Carrez
+--  Copyright (C) 2018 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -207,18 +207,18 @@ private
    COL_4_1_NAME : aliased constant String := "author_id";
 
    MBLOG_DEF : aliased constant ADO.Schemas.Class_Mapping :=
-     (Count => 5,
-      Table => MBLOG_NAME'Access,
+     (Count   => 5,
+      Table   => MBLOG_NAME'Access,
       Members => (
          1 => COL_0_1_NAME'Access,
          2 => COL_1_1_NAME'Access,
          3 => COL_2_1_NAME'Access,
          4 => COL_3_1_NAME'Access,
-         5 => COL_4_1_NAME'Access
-)
+         5 => COL_4_1_NAME'Access)
      );
    MBLOG_TABLE : constant ADO.Schemas.Class_Mapping_Access
       := MBLOG_DEF'Access;
+
 
    Null_Mblog : constant Mblog_Ref
       := Mblog_Ref'(ADO.Objects.Object_Ref with null record);
