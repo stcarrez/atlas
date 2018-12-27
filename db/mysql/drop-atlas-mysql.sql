@@ -15,6 +15,15 @@ DROP TABLE IF EXISTS `awa_rating`;
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_question`;
 DROP TABLE IF EXISTS `awa_answer`;
+/* Copied from awa-blogs-drop-mysql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS `awa_post`;
+DROP TABLE IF EXISTS `awa_blog`;
+/* Copied from awa_counters-drop-mysql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS `awa_visit`;
+DROP TABLE IF EXISTS `awa_counter_definition`;
+DROP TABLE IF EXISTS `awa_counter`;
 /* Copied from awa-images-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_image`;
@@ -27,15 +36,6 @@ DROP TABLE IF EXISTS `awa_store_local`;
 DROP TABLE IF EXISTS `awa_storage_folder`;
 DROP TABLE IF EXISTS `awa_storage_data`;
 DROP TABLE IF EXISTS `awa_storage`;
-/* Copied from awa-blogs-drop-mysql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS `awa_post`;
-DROP TABLE IF EXISTS `awa_blog`;
-/* Copied from awa_counters-drop-mysql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS `awa_visit`;
-DROP TABLE IF EXISTS `awa_counter_definition`;
-DROP TABLE IF EXISTS `awa_counter`;
 /* Copied from awa-comments-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `awa_comment`;
@@ -63,6 +63,8 @@ DROP TABLE IF EXISTS `awa_application`;
 DROP TABLE IF EXISTS `awa_queue`;
 DROP TABLE IF EXISTS `awa_message_type`;
 DROP TABLE IF EXISTS `awa_message`;
+DROP TABLE IF EXISTS `awa_audit_field`;
+DROP TABLE IF EXISTS `awa_audit`;
 /* Copied from ado-drop-mysql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS `sequence`;
