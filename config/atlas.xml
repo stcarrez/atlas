@@ -91,6 +91,11 @@
   </context-param>
 
   <filter-mapping>
+    <filter-name>service</filter-name>
+    <url-pattern>/index.html</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
     <filter-name>no-cache</filter-name>
     <url-pattern>/wikis/*</url-pattern>
     <url-pattern>/blogs/*</url-pattern>
