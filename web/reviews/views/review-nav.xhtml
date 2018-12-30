@@ -1,4 +1,4 @@
-<ul class='review-nav'
+<ul class='review-nav awa-page-actions'
         xmlns:awa="http://code.google.com/p/ada-awa/jsf"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:util="http://code.google.com/p/ada-asf/util"
@@ -7,10 +7,10 @@
     <li id='review-nav-ask'>
         <c:choose>
             <c:when test="#{user.isLogged}">
-                <a href="#{contextPath}/reviews/edit-review.html">#{reviewMsg.review_create_label}</a>
+                <a class="awa-button" href="#{contextPath}/reviews/edit-review.html">#{reviewMsg.review_create_label}</a>
             </c:when>
             <c:otherwise>
-                <a id="review-login" href="#">#{reviewMsg.review_create_label}</a>
+                <a class="awa-button" id="review-login" href="#">#{reviewMsg.review_create_label}</a>
                 <util:script>
                      $("#review-login").modal({
                         url: "#{contextPath}/auth/forms/login-dialog.html?redirect=#{contextPath}/reviews/edit-review.html",

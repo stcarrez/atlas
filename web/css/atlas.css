@@ -160,36 +160,11 @@ div.likes div.like-google {
 /**
  * Review module style.
  */
-ul.review-nav {
-	list-style-type: none;
-    margin-top: 10px;
-    float: left;
-    width: 96%;
-    padding-left: 3%;
-    padding-right: 3%;
-    border-bottom: 1px solid #eee;
-}
-ul.review-nav li {
-	float: right;
-    height: 20px;
-}
-#review-nav-ask {
-    margin-right: 100px;
-    margin-bottom: 5px;
+#review-nav-ask .awa-button {
     background: #DFEFFC;
     border: 1px solid #C5DBEC;
-    color: #2E6E9E;
-    border-radius: 5px;
 }
-#review-nav-ask a, ul.review-info a {
-    display: block;
-    padding: 5px;
-    line-height: 12px;
-    color: #2E6E9E;
-    font-weight: bold;
-    text-decoration: none;
-    padding-bottom: 8px;
-}
+
 div.atlas-reviews {
 	float: left;
 	width: 100%;

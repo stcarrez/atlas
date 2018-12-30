@@ -1,4 +1,4 @@
-<div class='awa-form ui-widget'
+<div class='awa-form ui-widget ui-widget-content ui-corner-all '
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:w="http://code.google.com/p/ada-asf/widget"
      xmlns:h="http://java.sun.com/jsf/html">
@@ -9,11 +9,11 @@
             <div class='awa-messages'>
                 <h:message styleClass='awa-error'/>
             </div>
-            <w:inputText styleClass="awa-required"
+            <w:inputText styleClass="awa-required ui-corner-all"
                          id='title' size='50' required='true' value='#{review.title}'
                          placeholder="#{reviewMsg.review_title_placeholder}"
                          title='#{reviewMsg.review_title_label}'/>
-            <w:inputText styleClass="awa-required"
+            <w:inputText styleClass="awa-required ui-corner-all"
                          id='site' size='50' required='true' value='#{review.site}'
                          placeholder="#{reviewMsg.review_site_placeholder}"
                          title='#{reviewMsg.review_site_label}'/>
@@ -21,6 +21,7 @@
               <dt><label for='text'>Review text</label></dt>
               <dd>
                  <h:inputTextarea id='text' rows='20' required='true'
+                                  styleClass="ui-corner-all"
                                   placeholder="#{reviewMsg.review_text_placeholder}"
                                   value='#{review.text}'/>
               </dd>
