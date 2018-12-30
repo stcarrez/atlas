@@ -16,6 +16,9 @@
     font-weight: bold;
     font-size: 1.3em;
 }
+#awa-clfooter {
+    height: 50px;
+}
 .atlas-gravatar {
     float: left;
     width: 100px;
