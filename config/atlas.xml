@@ -106,4 +106,14 @@
     <url-pattern>/storages/*</url-pattern>
   </filter-mapping>
 
+  <filter-mapping>
+    <filter-name>measures</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet-mapping>
+    <servlet-name>measures</servlet-name>
+    <url-pattern>/statistics.xml</url-pattern>
+  </servlet-mapping>
+
 </module>
