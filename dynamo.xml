@@ -1,13 +1,12 @@
 <project>
     <name>atlas</name>
     <property name="author_email">Stephane.Carrez@gmail.com</property>
-    <property name="search_dirs">/data/ext/local-gnat-2015/share/dynamo/awa_markedit;.;/data/ext/local-gnat-2015/share/dynamo/awa_wikis;/data/ext/local-gnat-2015/share/dynamo/awa_jobs;/data/ext/local-gnat-2015/share/dynamo/awa_votes;/data/ext/local-gnat-2015/share/dynamo/awa_questions;/data/ext/local-gnat-2015/share/dynamo/awa_images;/data/ext/local-gnat-2015/share/dynamo/awa_storages;/data/ext/local-gnat-2015/share/dynamo/awa_blogs;/data/ext/local-gnat-2015/share/dynamo/awa_counters;/data/ext/local-gnat-2015/share/dynamo/awa_comments;/data/ext/local-gnat-2015/share/dynamo/awa_tags;/data/ext/local-gnat-2015/share/dynamo/awa_mail;/data/ext/local-gnat-2015/share/dynamo/awa_workspaces;/data/ext/local-gnat-2015/share/dynamo/awa;/data/ext/local-gnat-2015/share/dynamo/ado;/data/ext/local-gnat-2015/share/dynamo/asf</property>
     <property name="is_ado">FALSE</property>
     <property name="license">apache</property>
     <property name="contextPath">/atlas</property>
     <property name="author">Stephane Carrez</property>
     <property name="is_web">TRUE</property>
-    <property name="database">mysql://localhost:3306/atlas?user=atlas</property>
+    <property name="database">sqlite:///atlas.db?synchronous=OFF&amp;encoding=UTF-8</property>
     <property name="is_tool">FALSE</property>
     <depend name="asf"></depend>
     <depend name="ado"></depend>
@@ -24,4 +23,6 @@
     <depend name="awa-votes"></depend>
     <depend name="awa-jobs"></depend>
     <depend name="awa-wikis"></depend>
+    <depend name="setup"></depend>
+    <depend name="awa-setup"></depend>
 </project>
