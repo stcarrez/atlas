@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018 Stephane Carrez
+--  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018, 2019 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@ with Ada.Exceptions;
 
 with Util.Log.Loggers;
 
+with ADO.Drivers;
 with AWS.Net.SSL;
 with AWS.Config.Set;
 with ASF.Server.Web;
@@ -48,6 +49,7 @@ procedure Atlas.Server is
    end Configure;
 
 begin
+   ADO.Drivers.Initialize;
    WS.Configure (Configure'Access);
    WS.Start;
    Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
