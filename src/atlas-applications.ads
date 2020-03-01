@@ -1,7 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas -- atlas applications
------------------------------------------------------------------------
---  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2018 Stephane Carrez
+--  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2018, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,10 +67,6 @@ package Atlas.Applications is
 
    type Application is new AWA.Applications.Application with private;
    type Application_Access is access all Application'Class;
-
-   --  Initialize the application.
-   procedure Initialize (App    : in Application_Access;
-                         Config : in ASF.Applications.Config);
 
    --  Initialize the ASF components provided by the application.
    --  This procedure is called by <b>Initialize</b>.
