@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018, 2019 Stephane Carrez
+--  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018, 2019, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,26 +18,43 @@
 with Ada.Exceptions;
 
 with Util.Log.Loggers;
+with Util.Commands;
 
 with ADO.Drivers;
 with AWS.Net.SSL;
 with AWS.Config.Set;
-with ASF.Server.Web;
+with Servlet.Server.Web;
 with AWA.Setup.Applications;
+with AWA.Commands.Drivers;
+with AWA.Commands.Start;
+with AWA.Commands.Setup;
+with AWA.Commands.Stop;
+with AWA.Commands.List;
 
 with Atlas.Applications;
 procedure Atlas.Server is
+
+   package Server_Commands is
+     new AWA.Commands.Drivers (Driver_Name => "atlas",
+                               Container_Type => Servlet.Server.Web.AWS_Container);
+
+   package List_Command is
+      new AWA.Commands.List (Server_Commands);
+
+   package Start_Command is
+      new AWA.Commands.Start (Server_Commands);
+
+   package Stop_Command is
+      new AWA.Commands.Stop (Server_Commands);
+
+   package Setup_Command is
+      new AWA.Commands.Setup (Start_Command);
+
 
    procedure Configure (Config : in out AWS.Config.Object);
 
    Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
    App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
-   WS      : ASF.Server.Web.AWS_Container;
-
-   procedure Setup is
-     new AWA.Setup.Applications.Configure (Atlas.Applications.Application'Class,
-                                           Atlas.Applications.Application_Access,
-                                           Atlas.Applications.Initialize);
 
    procedure Configure (Config : in out AWS.Config.Object) is
    begin
@@ -48,21 +65,25 @@ procedure Atlas.Server is
       AWS.Config.Set.Upload_Size_Limit (Config, 100_000_000);
    end Configure;
 
+   WS        : Servlet.Server.Web.AWS_Container renames Server_Commands.WS;
+   Context   : AWA.Commands.Context_Type;
+   Arguments : Util.Commands.Dynamic_Argument_List;
 begin
    ADO.Drivers.Initialize;
-   WS.Configure (Configure'Access);
-   WS.Start;
-   Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
-             Atlas.Applications.CONTEXT_PATH);
-   Setup (WS, App, "atlas", Atlas.Applications.CONTEXT_PATH);
+
+   WS.Register_Application (Atlas.Applications.CONTEXT_PATH, App.all'Access);
+
    if not AWS.Net.SSL.Is_Supported then
       Log.Error ("SSL is not supported by AWS.");
       Log.Error ("SSL is required for the OAuth2/OpenID connector to "
                  & "connect to OAuth2/OpenID providers.");
       Log.Error ("Please, rebuild AWS with SSL support.");
    end if;
-   delay 365.0 * 24.0 * 3600.0;
-   App.Close;
+
+   Log.Info ("Connect you browser to: http://localhost:8080{0}/index.html",
+             Atlas.Applications.CONTEXT_PATH);
+   Server_Commands.Run (Context, Arguments);
+
 exception
    when E : others =>
       Log.Error ("Exception in server: " &
