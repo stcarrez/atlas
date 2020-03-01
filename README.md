@@ -14,6 +14,7 @@ To build Atlas you will need the following projects:
 
 * AWA           (https://github.com/stcarrez/ada-awa)
 * ASF           (https://github.com/stcarrez/ada-asf)
+* Ada Servlet   (https://github.com/stcarrez/ada-servlet)
 * ADO           (https://github.com/stcarrez/ada-ado)
 * Ada Util      (https://github.com/stcarrez/ada-util)
 * Ada Wiki      (https://github.com/stcarrez/ada-wiki)
