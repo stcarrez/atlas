@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------
 --  atlas -- atlas applications
 -----------------------------------------------------------------------
---  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2017 Stephane Carrez
+--  Copyright (C) 2012, 2013, 2014, 2015, 2016, 2017, 2020 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -111,23 +111,6 @@ package body Atlas.Applications is
    end Set_Functions;
 
    --  ------------------------------
-   --  Initialize the application:
-   --  <ul>
-   --     <li>Register the servlets and filters.
-   --     <li>Register the application modules.
-   --     <li>Define the servlet and filter mappings.
-   --  </ul>
-   --  ------------------------------
-   procedure Initialize (App    : in Application_Access;
-                         Config : in ASF.Applications.Config) is
-      Fact  : AWA.Applications.Factory.Application_Factory;
-   begin
-      App.Self := App;
-      App.Initialize (Config, Fact);
-      App.Set_Global ("contextPath", CONTEXT_PATH);
-   end Initialize;
-
-   --  ------------------------------
    --  Initialize the ASF components provided by the application.
    --  This procedure is called by <b>Initialize</b>.
    --  It should register the component factories used by the application.
@@ -137,6 +120,8 @@ package body Atlas.Applications is
       procedure Register is
          new ASF.Applications.Main.Register_Functions (Set_Functions);
    begin
+      App.Self := App'Unchecked_Access;
+      App.Set_Global ("contextPath", CONTEXT_PATH);
       Register (App);
       AWA.Applications.Application (App).Initialize_Components;
       App.Add_Converter (Name      => "smartDateConverter",
