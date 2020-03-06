@@ -15,14 +15,12 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-with Ada.Exceptions;
 
 with Util.Log.Loggers;
 with Util.Commands;
 
 with ADO.Drivers;
 with AWS.Net.SSL;
-with AWS.Config.Set;
 with Servlet.Server.Web;
 with AWA.Setup.Applications;
 with AWA.Commands.Drivers;
@@ -50,21 +48,8 @@ procedure Atlas.Server is
    package Setup_Command is
       new AWA.Commands.Setup (Start_Command);
 
-
-   procedure Configure (Config : in out AWS.Config.Object);
-
    Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
    App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
-
-   procedure Configure (Config : in out AWS.Config.Object) is
-   begin
-      AWS.Config.Set.Input_Line_Size_Limit (1_000_000);
-      AWS.Config.Set.Max_Connection (Config, 2);
-      AWS.Config.Set.Accept_Queue_Size (Config, 100);
-      AWS.Config.Set.Send_Buffer_Size (Config, 128 * 1024);
-      AWS.Config.Set.Upload_Size_Limit (Config, 100_000_000);
-   end Configure;
-
    WS        : Servlet.Server.Web.AWS_Container renames Server_Commands.WS;
    Context   : AWA.Commands.Context_Type;
    Arguments : Util.Commands.Dynamic_Argument_List;
@@ -86,7 +71,6 @@ begin
 
 exception
    when E : others =>
-      Log.Error ("Exception in server: " &
-                 Ada.Exceptions.Exception_Name (E) & ": " &
-                 Ada.Exceptions.Exception_Message (E));
+      Context.Print (E);
+
 end Atlas.Server;
