@@ -2860,10 +2860,10 @@ INSERT INTO "awa_user" (first_name, last_name, password, open_id, country, name,
    VALUES('','','','Nobody','','Atlas Installator',1,1,1, 'xxx');
 INSERT INTO "awa_email" (id, version, email, user_id, status, last_error_date)
    VALUES (1,2,'Atlas@earth.world',1,0,'0000-00-00 00:00:00');
-INSERT INTO "awa_blog" (id, version, name, uid, create_date, workspace_id, update_date, url)
-   VALUES (1,1,'Java 2 Ada','','2012-05-22 19:55:24',1,'0000-00-00 00:00:00','');
+INSERT INTO "awa_blog" (id, version, name, uid, create_date, workspace_id, update_date, url, format, default_image_url)
+   VALUES (1,1,'Java 2 Ada','','2012-05-22 19:55:24',1,'0000-00-00 00:00:00','',0,'');
 INSERT INTO "awa_post" (id, version, title, uri, text, create_date, publish_date, status, author_id, blog_id,
-   allow_comments, read_count)
+   allow_comments, read_count,summary,format)
    VALUES (1,7,'Welcome to Atlas, the Ada Web Application demonstrator',
 '2014/03/16/Welcome-to-Atlas-the-Ada-Web-Application-demonstrator',
 '__Atlas__ is a demonstration application implemented using the [AWA|https://github.com/stcarrez/ada-awa] framework.
@@ -2883,7 +2883,7 @@ Enjoy,
 
 Stephane
 
-','2012-05-22 20:08:47','2017-02-04 22:41:44',1,1,1,0,1916);
+','2012-05-22 20:08:47','2017-02-04 22:41:44',1,1,1,0,1916,'',0);
 
 INSERT INTO awa_question VALUES ('2014-11-11 17:41:10','Is it possible to make any kind of web application, not just blogs, with AWA ?','','1901-01-01 23:00:00','\n...',0,201,1,1310,1301,NULL);
 
