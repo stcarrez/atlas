@@ -15,5 +15,6 @@ RUN mkdir -p /usr/src \
 WORKDIR /usr/src/atlas
 
 EXPOSE 8080
-CMD ["/usr/src/atlas/bin/atlas-server"]
+ENTRYPOINT ["/usr/src/atlas/bin/atlas-server"]
+CMD ["setup", "-u=upload", "atlas"]
 
