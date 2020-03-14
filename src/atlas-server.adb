@@ -36,17 +36,10 @@ procedure Atlas.Server is
      new AWA.Commands.Drivers (Driver_Name => "atlas",
                                Container_Type => Servlet.Server.Web.AWS_Container);
 
-   package List_Command is
-      new AWA.Commands.List (Server_Commands);
-
-   package Start_Command is
-      new AWA.Commands.Start (Server_Commands);
-
-   package Stop_Command is
-      new AWA.Commands.Stop (Server_Commands);
-
-   package Setup_Command is
-      new AWA.Commands.Setup (Start_Command);
+   package List_Command is new AWA.Commands.List (Server_Commands);
+   package Start_Command is new AWA.Commands.Start (Server_Commands);
+   package Stop_Command is new AWA.Commands.Stop (Server_Commands);
+   package Setup_Command is new AWA.Commands.Setup (Start_Command);
 
    Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
    App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
