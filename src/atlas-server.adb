@@ -15,19 +15,23 @@
 --  See the License for the specific language governing permissions and
 --  limitations under the License.
 -----------------------------------------------------------------------
-
 with Util.Log.Loggers;
 with Util.Commands;
 
-with ADO.Drivers;
 with AWS.Net.SSL;
 with Servlet.Server.Web;
+
 with AWA.Setup.Applications;
 with AWA.Commands.Drivers;
 with AWA.Commands.Start;
 with AWA.Commands.Setup;
 with AWA.Commands.Stop;
 with AWA.Commands.List;
+
+with ADO.Drivers;
+--  with ADO.Sqlite;
+--  with ADO.Mysql;
+--  with ADO.Postgresql;
 
 with Atlas.Applications;
 procedure Atlas.Server is
@@ -41,14 +45,17 @@ procedure Atlas.Server is
    package Stop_Command is new AWA.Commands.Stop (Server_Commands);
    package Setup_Command is new AWA.Commands.Setup (Start_Command);
 
-   Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
-   App     : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
+   Log       : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
+   App       : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
    WS        : Servlet.Server.Web.AWS_Container renames Server_Commands.WS;
    Context   : AWA.Commands.Context_Type;
    Arguments : Util.Commands.Dynamic_Argument_List;
 begin
+   --  Initialize the database drivers (all of them or specific ones).
    ADO.Drivers.Initialize;
-
+   --  ADO.Sqlite.Initialize;
+   --  ADO.Mysql.Initialize;
+   --  ADO.Postgresql.Initialize;
    WS.Register_Application (Atlas.Applications.CONTEXT_PATH, App.all'Access);
 
    if not AWS.Net.SSL.Is_Supported then
@@ -65,5 +72,4 @@ begin
 exception
    when E : others =>
       Context.Print (E);
-
 end Atlas.Server;
