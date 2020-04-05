@@ -30,7 +30,6 @@ with ASF.Applications.Main;
 with ADO.Queries;
 with ADO.Sessions;
 
-with AWA.Applications.Factory;
 with AWA.Services.Contexts;
 with Atlas.Applications.Models;
 
@@ -191,7 +190,6 @@ package body Atlas.Applications is
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Mail.Modules.NAME,
-                URI    => "mail",
                 Module => App.Mail_Module'Access);
 
       Register (App    => App.Self.all'Access,
@@ -200,62 +198,50 @@ package body Atlas.Applications is
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Jobs.Modules.NAME,
-                URI    => "jobs",
                 Module => App.Job_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Tags.Modules.NAME,
-                URI    => "tags",
                 Module => App.Tag_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Comments.Modules.NAME,
-                URI    => "comments",
                 Module => App.Comment_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Blogs.Modules.NAME,
-                URI    => "blogs",
                 Module => App.Blog_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Storages.Modules.NAME,
-                URI    => "storages",
                 Module => App.Storage_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Images.Modules.NAME,
-                URI    => "images",
                 Module => App.Image_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Votes.Modules.NAME,
-                URI    => "votes",
                 Module => App.Vote_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Questions.Modules.NAME,
-                URI    => "questions",
                 Module => App.Question_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Wikis.Modules.NAME,
-                URI    => "wikis",
                 Module => App.Wiki_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => AWA.Wikis.Previews.NAME,
-                URI    => "wikis-preview",
                 Module => App.Preview_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => Atlas.Microblog.Modules.NAME,
-                URI    => "microblog",
                 Module => App.Microblog_Module'Access);
 
       Register (App    => App.Self.all'Access,
                 Name   => Atlas.Reviews.Modules.NAME,
-                URI    => "reviews",
                 Module => App.Review_Module'Access);
    end Initialize_Modules;
 
