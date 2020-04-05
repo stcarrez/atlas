@@ -1,5 +1,6 @@
 *~
 *.log
+.initialized
 config.status
 auto.cgpr
 CHANGES
@@ -9,10 +10,12 @@ acc.xml
 *.gb_project
 *.project
 *.log
+atlas.gpr
 ChangeLog
 .settings
 configure.lineno
 autom4te.cache
+Makefile.conf
 *.txt
 *.gcov
 *.mat
