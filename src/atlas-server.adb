@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
 --  atlas-server -- Application server
---  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018, 2019, 2020 Stephane Carrez
+--  Copyright (C) 2011, 2012, 2013, 2016, 2017, 2018, 2019, 2020, 2021 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,6 @@ with Util.Commands;
 with AWS.Net.SSL;
 with Servlet.Server.Web;
 
-with AWA.Setup.Applications;
 with AWA.Commands.Drivers;
 with AWA.Commands.Start;
 with AWA.Commands.Setup;
@@ -48,7 +47,8 @@ procedure Atlas.Server is
    package Setup_Command is new AWA.Commands.Setup (Start_Command);
 
    Log       : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
-   App       : constant Atlas.Applications.Application_Access := new Atlas.Applications.Application;
+   App       : constant Atlas.Applications.Application_Access
+     := new Atlas.Applications.Application;
    WS        : Servlet.Server.Web.AWS_Container renames Server_Commands.WS;
    Context   : AWA.Commands.Context_Type;
    Arguments : Util.Commands.Dynamic_Argument_List;
