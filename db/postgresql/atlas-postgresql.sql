@@ -1,7 +1,7 @@
 /* File generated automatically by dynamo */
 /* The Mblog table holds the message posted by users.
 Once posted, the message is not supposed to be changed. */
-CREATE TABLE mblog (
+CREATE TABLE IF NOT EXISTS mblog (
   /*  */
   "id" BIGINT NOT NULL,
   /*  */
@@ -15,7 +15,7 @@ CREATE TABLE mblog (
   PRIMARY KEY ("id")
 );
 /* the table that contains the reviews made by users. */
-CREATE TABLE atlas_review (
+CREATE TABLE IF NOT EXISTS atlas_review (
   /* the review identifier */
   "id" BIGINT NOT NULL,
   /*  */
@@ -35,6 +35,5 @@ CREATE TABLE atlas_review (
   PRIMARY KEY ("id")
 );
 INSERT INTO entity_type (name) VALUES
-('mblog')
-,('atlas_review')
-;
+('mblog'), ('atlas_review')
+  ON CONFLICT DO NOTHING;
