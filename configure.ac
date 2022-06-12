@@ -1,7 +1,8 @@
 dnl Autoconf configure script for atlas
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(src/atlas.ads)
+AC_INIT
+AC_CONFIG_SRCDIR([src/atlas.ads])
 
 AM_GNAT_LIBRARY_PROJECT(atlas)
 
@@ -30,6 +31,6 @@ AM_GNAT_FIND_ADA_WIKI([atlas])
 AM_GNAT_FIND_ADA_OPENAPI([atlas])
 AM_GNAT_FIND_ADA_AWA([atlas])
 
-AC_OUTPUT(
-Makefile.conf atlas.gpr
-)
+AC_CONFIG_FILES([Makefile.conf atlas.gpr
+])
+AC_OUTPUT
