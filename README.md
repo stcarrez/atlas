@@ -36,6 +36,27 @@ built and installed all of the above projects.
 
 # Building Atlas
 
+## Build with Alire
+
+Building with [Alire](https://github.com/alire-project/alire) is done by several
+steps with the `alr` command.  Alire will handle the dependencies and preparation
+steps to build all the requires libraries.  First, run the following `alr` commands:
+
+```
+alr update
+alr build
+```
+
+Then, you must setup the environment by running the following `alr` command:
+
+```
+alr exec dynamo generate db uml/atlas.zargo
+```
+
+
+
+## Build with configure
+
 To configure Atlas, use the following command:
 ```
    ./configure
