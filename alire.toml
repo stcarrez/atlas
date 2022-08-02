@@ -1,0 +1,29 @@
+description = "Atlas AWA Demonstrator"
+name = "atlas"
+version = "1.0.0"
+authors = ["Stephane.Carrez@gmail.com"]
+licenses = "Apache-2.0"
+maintainers = ["Stephane.Carrez@gmail.com"]
+maintainers-logins = ["stcarrez"]
+project-files = ["atlas.gpr"]
+tags = ["web", "demo", "blog", "wiki", "questions", "storage"]
+website = "https://gitlab.com/stcarrez/atlas"
+executables = ["atlas"]
+long-description = """
+
+Atlas is an online application that provides a blogging system,
+a question & answer area, a wiki space and a document storage space.
+It shows the different plugins and features provided by
+the [Ada Web Application](https://github.com/stcarrez/ada-awa) framework.
+The goal of Atlas is to show you some interesting features
+provided by Ada Web Application so that you can try them,
+look at their implementation and learn how you may use and extend
+[Ada Web Application](https://github.com/stcarrez/ada-awa) for your own needs.
+
+"""
+
+[[depends-on]]
+awa = "^2.4.0"
+servletada_aws = "any"
+ado_sqlite = "^2.3.0"
+dynamo = "1.3.0"
