@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS awa_message (
   `parameters` VARCHAR(255) BINARY NOT NULL,
   /* the server identifier which processes the message */
   `server_id` INTEGER NOT NULL,
-  /* the task identfier on the server which processes the message */
+  /* the task identifier on the server which processes the message */
   `task_id` INTEGER NOT NULL,
   /* the message status */
   `status` TINYINT NOT NULL,
@@ -422,6 +422,92 @@ INSERT IGNORE INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = "awa_comment"), "status");
 INSERT IGNORE INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = "awa_comment"), "format");
+/* Copied from awa-blogs-mysql.sql*/
+/* File generated automatically by dynamo */
+/*  */
+CREATE TABLE IF NOT EXISTS awa_blog (
+  /* the blog identifier */
+  `id` BIGINT NOT NULL,
+  /* the blog name */
+  `name` VARCHAR(255) BINARY NOT NULL,
+  /* the version */
+  `version` INTEGER NOT NULL,
+  /* the blog uuid */
+  `uid` VARCHAR(255) BINARY NOT NULL,
+  /* the blog creation date */
+  `create_date` DATETIME NOT NULL,
+  /* the date when the blog was updated */
+  `update_date` DATETIME NOT NULL,
+  /* The blog base URL. */
+  `url` VARCHAR(255) BINARY NOT NULL,
+  /* the default post format. */
+  `format` TINYINT NOT NULL,
+  /* the default image URL to be used */
+  `default_image_url` VARCHAR(255) BINARY NOT NULL,
+  /* the workspace that this blog belongs to */
+  `workspace_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*  */
+CREATE TABLE IF NOT EXISTS awa_post (
+  /* the post identifier */
+  `id` BIGINT NOT NULL,
+  /* the post title */
+  `title` VARCHAR(255) BINARY NOT NULL,
+  /* the post text content */
+  `text` TEXT NOT NULL,
+  /* the post creation date */
+  `create_date` DATETIME NOT NULL,
+  /* the post URI */
+  `uri` VARCHAR(255) BINARY NOT NULL,
+  /*  */
+  `version` INTEGER NOT NULL,
+  /* the post publication date */
+  `publish_date` DATETIME ,
+  /* the post status */
+  `status` TINYINT NOT NULL,
+  /*  */
+  `allow_comments` TINYINT NOT NULL,
+  /* the number of times the post was read. */
+  `read_count` INTEGER NOT NULL,
+  /* the post summary. */
+  `summary` VARCHAR(4096) BINARY NOT NULL,
+  /* the blog post format. */
+  `format` TINYINT NOT NULL,
+  /*  */
+  `author_id` BIGINT NOT NULL,
+  /*  */
+  `blog_id` BIGINT NOT NULL,
+  /*  */
+  `image_id` BIGINT ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT IGNORE INTO entity_type (name) VALUES
+("awa_blog"), ("awa_post");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "name");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "uid");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "url");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "format");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "default_image_url");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "title");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "uri");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "publish_date");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "status");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "allow_comments");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "summary");
+INSERT IGNORE INTO awa_audit_field (entity_type, name)
+  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "format");
 /* Copied from awa-storages-mysql.sql*/
 /* File generated automatically by dynamo */
 /* The uri member holds the URI if the storage type is URL.
@@ -511,42 +597,6 @@ CREATE TABLE IF NOT EXISTS awa_store_local (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT IGNORE INTO entity_type (name) VALUES
 ("awa_storage"), ("awa_storage_data"), ("awa_storage_folder"), ("awa_store_local");
-/* Copied from awa-jobs-mysql.sql*/
-/* File generated automatically by dynamo */
-/* The job is associated with a dispatching queue. */
-CREATE TABLE IF NOT EXISTS awa_job (
-  /* the job identifier */
-  `id` BIGINT NOT NULL,
-  /* the job status */
-  `status` TINYINT NOT NULL,
-  /* the job name */
-  `name` VARCHAR(255) BINARY NOT NULL,
-  /* the job start date */
-  `start_date` DATETIME ,
-  /* the job creation date */
-  `create_date` DATETIME NOT NULL,
-  /* the job finish date */
-  `finish_date` DATETIME ,
-  /* the job progress indicator */
-  `progress` INTEGER NOT NULL,
-  /* the job parameters */
-  `parameters` TEXT NOT NULL,
-  /* the job result */
-  `results` TEXT NOT NULL,
-  /*  */
-  `version` INTEGER NOT NULL,
-  /* the job priority */
-  `priority` INTEGER NOT NULL,
-  /*  */
-  `user_id` BIGINT ,
-  /*  */
-  `event_id` BIGINT ,
-  /*  */
-  `session_id` BIGINT ,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT IGNORE INTO entity_type (name) VALUES
-("awa_job");
 /* Copied from awa-images-mysql.sql*/
 /* File generated automatically by dynamo */
 /* - The workspace contains one or several folders.
@@ -582,134 +632,6 @@ CREATE TABLE IF NOT EXISTS awa_image (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT IGNORE INTO entity_type (name) VALUES
 ("awa_image");
-/* Copied from awa_counters-mysql.sql*/
-/* File generated automatically by dynamo */
-/*  */
-CREATE TABLE IF NOT EXISTS awa_counter (
-  /* the object associated with the counter. */
-  `object_id` BIGINT NOT NULL,
-  /* the day associated with the counter. */
-  `date` DATE NOT NULL,
-  /* the counter value. */
-  `counter` INTEGER NOT NULL,
-  /* the counter definition identifier. */
-  `definition_id` BIGINT NOT NULL,
-  PRIMARY KEY (`object_id`, `date`, `definition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/* A counter definition defines what the counter represents. It uniquely identifies
-the counter for the Counter table. A counter may be associated with a database
-table. In that case, the counter definition has a relation to the corresponding Entity_Type. */
-CREATE TABLE IF NOT EXISTS awa_counter_definition (
-  /* the counter name. */
-  `name` VARCHAR(255) BINARY NOT NULL,
-  /* the counter unique id. */
-  `id` INTEGER NOT NULL,
-  /* the optional entity type that identifies the database table. */
-  `entity_type` INTEGER ,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*  */
-CREATE TABLE IF NOT EXISTS awa_visit (
-  /* the entity identifier. */
-  `object_id` BIGINT NOT NULL,
-  /* the number of times the entity was visited by the user. */
-  `counter` INTEGER NOT NULL,
-  /* the date and time when the entity was last visited. */
-  `date` DATETIME NOT NULL,
-  /* the user who visited the entity. */
-  `user` BIGINT NOT NULL,
-  /* the counter definition identifier. */
-  `definition_id` BIGINT NOT NULL,
-  PRIMARY KEY (`object_id`, `user`, `definition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT IGNORE INTO entity_type (name) VALUES
-("awa_counter"), ("awa_counter_definition"), ("awa_visit");
-/* Copied from awa-blogs-mysql.sql*/
-/* File generated automatically by dynamo */
-/*  */
-CREATE TABLE IF NOT EXISTS awa_blog (
-  /* the blog identifier */
-  `id` BIGINT NOT NULL,
-  /* the blog name */
-  `name` VARCHAR(255) BINARY NOT NULL,
-  /* the version */
-  `version` INTEGER NOT NULL,
-  /* the blog uuid */
-  `uid` VARCHAR(255) BINARY NOT NULL,
-  /* the blog creation date */
-  `create_date` DATETIME NOT NULL,
-  /* the date when the blog was updated */
-  `update_date` DATETIME NOT NULL,
-  /* The blog base URL. */
-  `url` VARCHAR(255) BINARY NOT NULL,
-  /* the default post format. */
-  `format` TINYINT NOT NULL,
-  /* the default image URL to be used */
-  `default_image_url` VARCHAR(255) BINARY NOT NULL,
-  /* the workspace that this blog belongs to */
-  `workspace_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*  */
-CREATE TABLE IF NOT EXISTS awa_post (
-  /* the post identifier */
-  `id` BIGINT NOT NULL,
-  /* the post title */
-  `title` VARCHAR(255) BINARY NOT NULL,
-  /* the post text content */
-  `text` TEXT NOT NULL,
-  /* the post creation date */
-  `create_date` DATETIME NOT NULL,
-  /* the post URI */
-  `uri` VARCHAR(255) BINARY NOT NULL,
-  /*  */
-  `version` INTEGER NOT NULL,
-  /* the post publication date */
-  `publish_date` DATETIME ,
-  /* the post status */
-  `status` TINYINT NOT NULL,
-  /*  */
-  `allow_comments` TINYINT NOT NULL,
-  /* the number of times the post was read. */
-  `read_count` INTEGER NOT NULL,
-  /* the post summary. */
-  `summary` VARCHAR(4096) BINARY NOT NULL,
-  /* the blog post format. */
-  `format` TINYINT NOT NULL,
-  /*  */
-  `author_id` BIGINT NOT NULL,
-  /*  */
-  `blog_id` BIGINT NOT NULL,
-  /*  */
-  `image_id` BIGINT ,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT IGNORE INTO entity_type (name) VALUES
-("awa_blog"), ("awa_post");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "name");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "uid");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "url");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "format");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_blog"), "default_image_url");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "title");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "uri");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "publish_date");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "status");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "allow_comments");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "summary");
-INSERT IGNORE INTO awa_audit_field (entity_type, name)
-  VALUES ((SELECT id FROM entity_type WHERE name = "awa_post"), "format");
 /* Copied from awa-questions-mysql.sql*/
 /* File generated automatically by dynamo */
 /* The answer table gives a list of anwsers to the question.
@@ -795,6 +717,42 @@ CREATE TABLE IF NOT EXISTS awa_vote (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT IGNORE INTO entity_type (name) VALUES
 ("awa_rating"), ("awa_vote");
+/* Copied from awa-jobs-mysql.sql*/
+/* File generated automatically by dynamo */
+/* The job is associated with a dispatching queue. */
+CREATE TABLE IF NOT EXISTS awa_job (
+  /* the job identifier */
+  `id` BIGINT NOT NULL,
+  /* the job status */
+  `status` TINYINT NOT NULL,
+  /* the job name */
+  `name` VARCHAR(255) BINARY NOT NULL,
+  /* the job start date */
+  `start_date` DATETIME ,
+  /* the job creation date */
+  `create_date` DATETIME NOT NULL,
+  /* the job finish date */
+  `finish_date` DATETIME ,
+  /* the job progress indicator */
+  `progress` INTEGER NOT NULL,
+  /* the job parameters */
+  `parameters` TEXT NOT NULL,
+  /* the job result */
+  `results` TEXT NOT NULL,
+  /*  */
+  `version` INTEGER NOT NULL,
+  /* the job priority */
+  `priority` INTEGER NOT NULL,
+  /*  */
+  `user_id` BIGINT ,
+  /*  */
+  `event_id` BIGINT ,
+  /*  */
+  `session_id` BIGINT ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT IGNORE INTO entity_type (name) VALUES
+("awa_job");
 /* Copied from awa-wikis-mysql.sql*/
 /* File generated automatically by dynamo */
 /*  */
@@ -885,6 +843,48 @@ INSERT IGNORE INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = "awa_wiki_space"), "is_public");
 INSERT IGNORE INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = "awa_wiki_space"), "format");
+/* Copied from awa-counters-mysql.sql*/
+/* File generated automatically by dynamo */
+/*  */
+CREATE TABLE IF NOT EXISTS awa_counter (
+  /* the object associated with the counter. */
+  `object_id` BIGINT NOT NULL,
+  /* the day associated with the counter. */
+  `date` DATE NOT NULL,
+  /* the counter value. */
+  `counter` INTEGER NOT NULL,
+  /* the counter definition identifier. */
+  `definition_id` BIGINT NOT NULL,
+  PRIMARY KEY (`object_id`, `date`, `definition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/* A counter definition defines what the counter represents. It uniquely identifies
+the counter for the Counter table. A counter may be associated with a database
+table. In that case, the counter definition has a relation to the corresponding Entity_Type. */
+CREATE TABLE IF NOT EXISTS awa_counter_definition (
+  /* the counter name. */
+  `name` VARCHAR(255) BINARY NOT NULL,
+  /* the counter unique id. */
+  `id` INTEGER NOT NULL,
+  /* the optional entity type that identifies the database table. */
+  `entity_type` INTEGER ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*  */
+CREATE TABLE IF NOT EXISTS awa_visit (
+  /* the entity identifier. */
+  `object_id` BIGINT NOT NULL,
+  /* the number of times the entity was visited by the user. */
+  `counter` INTEGER NOT NULL,
+  /* the date and time when the entity was last visited. */
+  `date` DATETIME NOT NULL,
+  /* the user who visited the entity. */
+  `user` BIGINT NOT NULL,
+  /* the counter definition identifier. */
+  `definition_id` BIGINT NOT NULL,
+  PRIMARY KEY (`object_id`, `user`, `definition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT IGNORE INTO entity_type (name) VALUES
+("awa_counter"), ("awa_counter_definition"), ("awa_visit");
 /* Copied from atlas-mysql.sql*/
 /* File generated automatically by dynamo */
 /* The Mblog table holds the message posted by users.

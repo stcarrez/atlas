@@ -2,11 +2,19 @@
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS atlas_review;
 DROP TABLE IF EXISTS mblog;
+/* Copied from awa-counters-drop-postgresql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS awa_visit;
+DROP TABLE IF EXISTS awa_counter_definition;
+DROP TABLE IF EXISTS awa_counter;
 /* Copied from awa-wikis-drop-postgresql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_wiki_space;
 DROP TABLE IF EXISTS awa_wiki_page;
 DROP TABLE IF EXISTS awa_wiki_content;
+/* Copied from awa-jobs-drop-postgresql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS awa_job;
 /* Copied from awa-votes-drop-postgresql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_vote;
@@ -15,27 +23,19 @@ DROP TABLE IF EXISTS awa_rating;
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_question;
 DROP TABLE IF EXISTS awa_answer;
-/* Copied from awa-blogs-drop-postgresql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS awa_post;
-DROP TABLE IF EXISTS awa_blog;
-/* Copied from awa_counters-drop-postgresql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS awa_visit;
-DROP TABLE IF EXISTS awa_counter_definition;
-DROP TABLE IF EXISTS awa_counter;
 /* Copied from awa-images-drop-postgresql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_image;
-/* Copied from awa-jobs-drop-postgresql.sql*/
-/* File generated automatically by dynamo */
-DROP TABLE IF EXISTS awa_job;
 /* Copied from awa-storages-drop-postgresql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_store_local;
 DROP TABLE IF EXISTS awa_storage_folder;
 DROP TABLE IF EXISTS awa_storage_data;
 DROP TABLE IF EXISTS awa_storage;
+/* Copied from awa-blogs-drop-postgresql.sql*/
+/* File generated automatically by dynamo */
+DROP TABLE IF EXISTS awa_post;
+DROP TABLE IF EXISTS awa_blog;
 /* Copied from awa-comments-drop-postgresql.sql*/
 /* File generated automatically by dynamo */
 DROP TABLE IF EXISTS awa_comment;

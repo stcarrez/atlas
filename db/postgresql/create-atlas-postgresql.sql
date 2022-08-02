@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS awa_message (
   "parameters" VARCHAR(255) NOT NULL,
   /* the server identifier which processes the message */
   "server_id" INTEGER NOT NULL,
-  /* the task identfier on the server which processes the message */
+  /* the task identifier on the server which processes the message */
   "task_id" INTEGER NOT NULL,
   /* the message status */
   "status" SMALLINT NOT NULL,
@@ -434,212 +434,6 @@ INSERT INTO awa_audit_field (entity_type, name)
 INSERT INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = 'awa_comment'), 'format')
   ON CONFLICT DO NOTHING;
-/* Copied from awa-storages-postgresql.sql*/
-/* File generated automatically by dynamo */
-/* The uri member holds the URI if the storage type is URL.
-
-When storage is FILE, the local file path is built by using
-the workspace identifier and the storage identifier. */
-CREATE TABLE IF NOT EXISTS awa_storage (
-  /* the storage type which defines where the content is stored */
-  "storage" SMALLINT NOT NULL,
-  /* the storage creation date */
-  "create_date" TIMESTAMP NOT NULL,
-  /* the file name */
-  "name" VARCHAR(255) NOT NULL,
-  /* the file size */
-  "file_size" INTEGER NOT NULL,
-  /* the mime type */
-  "mime_type" VARCHAR(255) NOT NULL,
-  /* the storage URI */
-  "uri" VARCHAR(255) NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /* the storage identifier */
-  "id" BIGINT NOT NULL,
-  /* whether the document is public or not. */
-  "is_public" BOOLEAN NOT NULL,
-  /*  */
-  "original_id" BIGINT ,
-  /*  */
-  "store_data_id" BIGINT ,
-  /*  */
-  "owner_id" BIGINT NOT NULL,
-  /*  */
-  "workspace_id" BIGINT NOT NULL,
-  /*  */
-  "folder_id" BIGINT ,
-  PRIMARY KEY ("id")
-);
-/* The storage data is created only if the storage type
-is set to DATABASE.  It holds the file content in the blob. */
-CREATE TABLE IF NOT EXISTS awa_storage_data (
-  /* the storage data identifier */
-  "id" BIGINT NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /* the storage content */
-  "data" BYTEA NOT NULL,
-  PRIMARY KEY ("id")
-);
-/*  */
-CREATE TABLE IF NOT EXISTS awa_storage_folder (
-  /* the storage folder identifier */
-  "id" BIGINT NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /* the folder creation date */
-  "create_date" TIMESTAMP NOT NULL,
-  /*  */
-  "name" VARCHAR(255) NOT NULL,
-  /*  */
-  "workspace_id" BIGINT NOT NULL,
-  /*  */
-  "owner_id" BIGINT NOT NULL,
-  PRIMARY KEY ("id")
-);
-/* The local store record is created when a copy of the data is needed on the local file system.
-The creation date refers to the date when the data was copied to the local file system.
-The expiration date indicates a date after which the local file can be removed
-from the local file system. */
-CREATE TABLE IF NOT EXISTS awa_store_local (
-  /* the local store identifier */
-  "id" BIGINT NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /*  */
-  "store_version" INTEGER NOT NULL,
-  /* the shared flag which indicates whether this local store can be shared by several clients. */
-  "shared" BOOLEAN NOT NULL,
-  /* the local store path */
-  "path" VARCHAR(255) NOT NULL,
-  /* the local store expiration date */
-  "expire_date" DATE NOT NULL,
-  /* the creation date */
-  "create_date" TIMESTAMP NOT NULL,
-  /*  */
-  "storage_id" BIGINT ,
-  PRIMARY KEY ("id")
-);
-INSERT INTO entity_type (name) VALUES
-('awa_storage'), ('awa_storage_data'), ('awa_storage_folder'), ('awa_store_local')
-  ON CONFLICT DO NOTHING;
-/* Copied from awa-jobs-postgresql.sql*/
-/* File generated automatically by dynamo */
-/* The job is associated with a dispatching queue. */
-CREATE TABLE IF NOT EXISTS awa_job (
-  /* the job identifier */
-  "id" BIGINT NOT NULL,
-  /* the job status */
-  "status" SMALLINT NOT NULL,
-  /* the job name */
-  "name" VARCHAR(255) NOT NULL,
-  /* the job start date */
-  "start_date" TIMESTAMP ,
-  /* the job creation date */
-  "create_date" TIMESTAMP NOT NULL,
-  /* the job finish date */
-  "finish_date" TIMESTAMP ,
-  /* the job progress indicator */
-  "progress" INTEGER NOT NULL,
-  /* the job parameters */
-  "parameters" TEXT NOT NULL,
-  /* the job result */
-  "results" TEXT NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /* the job priority */
-  "priority" INTEGER NOT NULL,
-  /*  */
-  "user_id" BIGINT ,
-  /*  */
-  "event_id" BIGINT ,
-  /*  */
-  "session_id" BIGINT ,
-  PRIMARY KEY ("id")
-);
-INSERT INTO entity_type (name) VALUES
-('awa_job')
-  ON CONFLICT DO NOTHING;
-/* Copied from awa-images-postgresql.sql*/
-/* File generated automatically by dynamo */
-/* - The workspace contains one or several folders.
-- Each image folder contains a set of images that have been uploaded by the user.
-- An image can be visible if a user has an ACL permission to read the associated folder.
-- An image marked as 'public=True' can be visible by anybody */
-CREATE TABLE IF NOT EXISTS awa_image (
-  /* the image identifier */
-  "id" BIGINT NOT NULL,
-  /* the image width */
-  "width" INTEGER NOT NULL,
-  /* the image height */
-  "height" INTEGER NOT NULL,
-  /* the thumbnail width */
-  "thumb_width" INTEGER NOT NULL,
-  /* the thumbnail height */
-  "thumb_height" INTEGER NOT NULL,
-  /*  */
-  "path" VARCHAR(255) NOT NULL,
-  /*  */
-  "public" BOOLEAN NOT NULL,
-  /*  */
-  "version" INTEGER NOT NULL,
-  /*  */
-  "thumbnail_id" BIGINT ,
-  /*  */
-  "folder_id" BIGINT NOT NULL,
-  /*  */
-  "owner_id" BIGINT NOT NULL,
-  /*  */
-  "storage_id" BIGINT NOT NULL,
-  PRIMARY KEY ("id")
-);
-INSERT INTO entity_type (name) VALUES
-('awa_image')
-  ON CONFLICT DO NOTHING;
-/* Copied from awa_counters-postgresql.sql*/
-/* File generated automatically by dynamo */
-/*  */
-CREATE TABLE IF NOT EXISTS awa_counter (
-  /* the object associated with the counter. */
-  "object_id" BIGINT NOT NULL,
-  /* the day associated with the counter. */
-  "date" DATE NOT NULL,
-  /* the counter value. */
-  "counter" INTEGER NOT NULL,
-  /* the counter definition identifier. */
-  "definition_id" BIGINT NOT NULL,
-  PRIMARY KEY ("object_id", "date", "definition_id")
-);
-/* A counter definition defines what the counter represents. It uniquely identifies
-the counter for the Counter table. A counter may be associated with a database
-table. In that case, the counter definition has a relation to the corresponding Entity_Type. */
-CREATE TABLE IF NOT EXISTS awa_counter_definition (
-  /* the counter name. */
-  "name" VARCHAR(255) NOT NULL,
-  /* the counter unique id. */
-  "id" INTEGER NOT NULL,
-  /* the optional entity type that identifies the database table. */
-  "entity_type" INTEGER ,
-  PRIMARY KEY ("id")
-);
-/*  */
-CREATE TABLE IF NOT EXISTS awa_visit (
-  /* the entity identifier. */
-  "object_id" BIGINT NOT NULL,
-  /* the number of times the entity was visited by the user. */
-  "counter" INTEGER NOT NULL,
-  /* the date and time when the entity was last visited. */
-  "date" TIMESTAMP NOT NULL,
-  /* the user who visited the entity. */
-  "user" BIGINT NOT NULL,
-  /* the counter definition identifier. */
-  "definition_id" BIGINT NOT NULL,
-  PRIMARY KEY ("object_id", "user", "definition_id")
-);
-INSERT INTO entity_type (name) VALUES
-('awa_counter'), ('awa_counter_definition'), ('awa_visit')
-  ON CONFLICT DO NOTHING;
 /* Copied from awa-blogs-postgresql.sql*/
 /* File generated automatically by dynamo */
 /*  */
@@ -739,6 +533,132 @@ INSERT INTO awa_audit_field (entity_type, name)
 INSERT INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = 'awa_post'), 'format')
   ON CONFLICT DO NOTHING;
+/* Copied from awa-storages-postgresql.sql*/
+/* File generated automatically by dynamo */
+/* The uri member holds the URI if the storage type is URL.
+
+When storage is FILE, the local file path is built by using
+the workspace identifier and the storage identifier. */
+CREATE TABLE IF NOT EXISTS awa_storage (
+  /* the storage type which defines where the content is stored */
+  "storage" SMALLINT NOT NULL,
+  /* the storage creation date */
+  "create_date" TIMESTAMP NOT NULL,
+  /* the file name */
+  "name" VARCHAR(255) NOT NULL,
+  /* the file size */
+  "file_size" INTEGER NOT NULL,
+  /* the mime type */
+  "mime_type" VARCHAR(255) NOT NULL,
+  /* the storage URI */
+  "uri" VARCHAR(255) NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /* the storage identifier */
+  "id" BIGINT NOT NULL,
+  /* whether the document is public or not. */
+  "is_public" BOOLEAN NOT NULL,
+  /*  */
+  "original_id" BIGINT ,
+  /*  */
+  "store_data_id" BIGINT ,
+  /*  */
+  "owner_id" BIGINT NOT NULL,
+  /*  */
+  "workspace_id" BIGINT NOT NULL,
+  /*  */
+  "folder_id" BIGINT ,
+  PRIMARY KEY ("id")
+);
+/* The storage data is created only if the storage type
+is set to DATABASE.  It holds the file content in the blob. */
+CREATE TABLE IF NOT EXISTS awa_storage_data (
+  /* the storage data identifier */
+  "id" BIGINT NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /* the storage content */
+  "data" BYTEA NOT NULL,
+  PRIMARY KEY ("id")
+);
+/*  */
+CREATE TABLE IF NOT EXISTS awa_storage_folder (
+  /* the storage folder identifier */
+  "id" BIGINT NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /* the folder creation date */
+  "create_date" TIMESTAMP NOT NULL,
+  /*  */
+  "name" VARCHAR(255) NOT NULL,
+  /*  */
+  "workspace_id" BIGINT NOT NULL,
+  /*  */
+  "owner_id" BIGINT NOT NULL,
+  PRIMARY KEY ("id")
+);
+/* The local store record is created when a copy of the data is needed on the local file system.
+The creation date refers to the date when the data was copied to the local file system.
+The expiration date indicates a date after which the local file can be removed
+from the local file system. */
+CREATE TABLE IF NOT EXISTS awa_store_local (
+  /* the local store identifier */
+  "id" BIGINT NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /*  */
+  "store_version" INTEGER NOT NULL,
+  /* the shared flag which indicates whether this local store can be shared by several clients. */
+  "shared" BOOLEAN NOT NULL,
+  /* the local store path */
+  "path" VARCHAR(255) NOT NULL,
+  /* the local store expiration date */
+  "expire_date" DATE NOT NULL,
+  /* the creation date */
+  "create_date" TIMESTAMP NOT NULL,
+  /*  */
+  "storage_id" BIGINT ,
+  PRIMARY KEY ("id")
+);
+INSERT INTO entity_type (name) VALUES
+('awa_storage'), ('awa_storage_data'), ('awa_storage_folder'), ('awa_store_local')
+  ON CONFLICT DO NOTHING;
+/* Copied from awa-images-postgresql.sql*/
+/* File generated automatically by dynamo */
+/* - The workspace contains one or several folders.
+- Each image folder contains a set of images that have been uploaded by the user.
+- An image can be visible if a user has an ACL permission to read the associated folder.
+- An image marked as 'public=True' can be visible by anybody */
+CREATE TABLE IF NOT EXISTS awa_image (
+  /* the image identifier */
+  "id" BIGINT NOT NULL,
+  /* the image width */
+  "width" INTEGER NOT NULL,
+  /* the image height */
+  "height" INTEGER NOT NULL,
+  /* the thumbnail width */
+  "thumb_width" INTEGER NOT NULL,
+  /* the thumbnail height */
+  "thumb_height" INTEGER NOT NULL,
+  /*  */
+  "path" VARCHAR(255) NOT NULL,
+  /*  */
+  "public" BOOLEAN NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /*  */
+  "thumbnail_id" BIGINT ,
+  /*  */
+  "folder_id" BIGINT NOT NULL,
+  /*  */
+  "owner_id" BIGINT NOT NULL,
+  /*  */
+  "storage_id" BIGINT NOT NULL,
+  PRIMARY KEY ("id")
+);
+INSERT INTO entity_type (name) VALUES
+('awa_image')
+  ON CONFLICT DO NOTHING;
 /* Copied from awa-questions-postgresql.sql*/
 /* File generated automatically by dynamo */
 /* The answer table gives a list of anwsers to the question.
@@ -825,6 +745,43 @@ CREATE TABLE IF NOT EXISTS awa_vote (
 );
 INSERT INTO entity_type (name) VALUES
 ('awa_rating'), ('awa_vote')
+  ON CONFLICT DO NOTHING;
+/* Copied from awa-jobs-postgresql.sql*/
+/* File generated automatically by dynamo */
+/* The job is associated with a dispatching queue. */
+CREATE TABLE IF NOT EXISTS awa_job (
+  /* the job identifier */
+  "id" BIGINT NOT NULL,
+  /* the job status */
+  "status" SMALLINT NOT NULL,
+  /* the job name */
+  "name" VARCHAR(255) NOT NULL,
+  /* the job start date */
+  "start_date" TIMESTAMP ,
+  /* the job creation date */
+  "create_date" TIMESTAMP NOT NULL,
+  /* the job finish date */
+  "finish_date" TIMESTAMP ,
+  /* the job progress indicator */
+  "progress" INTEGER NOT NULL,
+  /* the job parameters */
+  "parameters" TEXT NOT NULL,
+  /* the job result */
+  "results" TEXT NOT NULL,
+  /*  */
+  "version" INTEGER NOT NULL,
+  /* the job priority */
+  "priority" INTEGER NOT NULL,
+  /*  */
+  "user_id" BIGINT ,
+  /*  */
+  "event_id" BIGINT ,
+  /*  */
+  "session_id" BIGINT ,
+  PRIMARY KEY ("id")
+);
+INSERT INTO entity_type (name) VALUES
+('awa_job')
   ON CONFLICT DO NOTHING;
 /* Copied from awa-wikis-postgresql.sql*/
 /* File generated automatically by dynamo */
@@ -923,6 +880,49 @@ INSERT INTO awa_audit_field (entity_type, name)
   ON CONFLICT DO NOTHING;
 INSERT INTO awa_audit_field (entity_type, name)
   VALUES ((SELECT id FROM entity_type WHERE name = 'awa_wiki_space'), 'format')
+  ON CONFLICT DO NOTHING;
+/* Copied from awa-counters-postgresql.sql*/
+/* File generated automatically by dynamo */
+/*  */
+CREATE TABLE IF NOT EXISTS awa_counter (
+  /* the object associated with the counter. */
+  "object_id" BIGINT NOT NULL,
+  /* the day associated with the counter. */
+  "date" DATE NOT NULL,
+  /* the counter value. */
+  "counter" INTEGER NOT NULL,
+  /* the counter definition identifier. */
+  "definition_id" BIGINT NOT NULL,
+  PRIMARY KEY ("object_id", "date", "definition_id")
+);
+/* A counter definition defines what the counter represents. It uniquely identifies
+the counter for the Counter table. A counter may be associated with a database
+table. In that case, the counter definition has a relation to the corresponding Entity_Type. */
+CREATE TABLE IF NOT EXISTS awa_counter_definition (
+  /* the counter name. */
+  "name" VARCHAR(255) NOT NULL,
+  /* the counter unique id. */
+  "id" INTEGER NOT NULL,
+  /* the optional entity type that identifies the database table. */
+  "entity_type" INTEGER ,
+  PRIMARY KEY ("id")
+);
+/*  */
+CREATE TABLE IF NOT EXISTS awa_visit (
+  /* the entity identifier. */
+  "object_id" BIGINT NOT NULL,
+  /* the number of times the entity was visited by the user. */
+  "counter" INTEGER NOT NULL,
+  /* the date and time when the entity was last visited. */
+  "date" TIMESTAMP NOT NULL,
+  /* the user who visited the entity. */
+  "user" BIGINT NOT NULL,
+  /* the counter definition identifier. */
+  "definition_id" BIGINT NOT NULL,
+  PRIMARY KEY ("object_id", "user", "definition_id")
+);
+INSERT INTO entity_type (name) VALUES
+('awa_counter'), ('awa_counter_definition'), ('awa_visit')
   ON CONFLICT DO NOTHING;
 /* Copied from atlas-postgresql.sql*/
 /* File generated automatically by dynamo */
