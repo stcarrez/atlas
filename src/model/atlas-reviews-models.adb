@@ -5,7 +5,7 @@
 --  Template used: templates/model/package-body.xhtml
 --  Ada Generator: https://github.com/stcarrez/dynamo Version 1.2.3
 -----------------------------------------------------------------------
---  Copyright (C) 2021 Stephane Carrez
+--  Copyright (C) 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,7 @@ with ASF.Events.Faces.Actions;
 pragma Warnings (On);
 package body Atlas.Reviews.Models is
 
-   pragma Style_Checks ("-mr");
+   pragma Style_Checks ("-mrIu");
    pragma Warnings (Off, "formal parameter * is not referenced");
    pragma Warnings (Off, "use clause for type *");
    pragma Warnings (Off, "use clause for private type *");
@@ -65,6 +65,7 @@ package body Atlas.Reviews.Models is
    end Set_Field;
 
    --  Internal method to allocate the Object_Record instance
+   overriding
    procedure Allocate (Object : in out Review_Ref) is
       Impl : Review_Access;
    begin
@@ -271,6 +272,7 @@ package body Atlas.Reviews.Models is
       Into := Result;
    end Copy;
 
+   overriding
    procedure Find (Object  : in out Review_Ref;
                    Session : in out ADO.Sessions.Session'Class;
                    Query   : in ADO.SQL.Query'Class;
@@ -320,6 +322,38 @@ package body Atlas.Reviews.Models is
       end if;
    end Load;
 
+   procedure Reload (Object  : in out Review_Ref;
+                     Session : in out ADO.Sessions.Session'Class;
+                     Updated : out Boolean) is
+      Result : ADO.Objects.Object_Record_Access;
+      Impl   : Review_Access;
+      Query  : ADO.SQL.Query;
+      Id     : ADO.Identifier;
+   begin
+      if Object.Is_Null then
+         raise ADO.Objects.NULL_ERROR;
+      end if;
+      Object.Prepare_Modify (Result);
+      Impl := Review_Impl (Result.all)'Access;
+      Id := ADO.Objects.Get_Key_Value (Impl.all);
+      Query.Bind_Param (Position => 1, Value => Id);
+      Query.Bind_Param (Position => 2, Value => Impl.Version);
+      Query.Set_Filter ("id = ? AND version != ?");
+      declare
+         Stmt : ADO.Statements.Query_Statement
+             := Session.Create_Statement (Query, REVIEW_DEF'Access);
+      begin
+         Stmt.Execute;
+         if Stmt.Has_Elements then
+            Updated := True;
+            Impl.Load (Stmt, Session);
+         else
+            Updated := False;
+         end if;
+      end;
+   end Reload;
+
+   overriding
    procedure Save (Object  : in out Review_Ref;
                    Session : in out ADO.Sessions.Master_Session'Class) is
       Impl : ADO.Objects.Object_Record_Access := Object.Get_Object;
@@ -335,6 +369,7 @@ package body Atlas.Reviews.Models is
       end if;
    end Save;
 
+   overriding
    procedure Delete (Object  : in out Review_Ref;
                      Session : in out ADO.Sessions.Master_Session'Class) is
       Impl : constant ADO.Objects.Object_Record_Access := Object.Get_Object;
@@ -347,6 +382,7 @@ package body Atlas.Reviews.Models is
    --  --------------------
    --  Free the object
    --  --------------------
+   overriding
    procedure Destroy (Object : access Review_Impl) is
       type Review_Impl_Ptr is access all Review_Impl;
       procedure Unchecked_Free is new Ada.Unchecked_Deallocation
@@ -358,6 +394,7 @@ package body Atlas.Reviews.Models is
       Unchecked_Free (Ptr);
    end Destroy;
 
+   overriding
    procedure Find (Object  : in out Review_Impl;
                    Session : in out ADO.Sessions.Session'Class;
                    Query   : in ADO.SQL.Query'Class;
@@ -390,6 +427,7 @@ package body Atlas.Reviews.Models is
       end if;
    end Load;
 
+   overriding
    procedure Save (Object  : in out Review_Impl;
                    Session : in out ADO.Sessions.Master_Session'Class) is
       Stmt : ADO.Statements.Update_Statement
@@ -452,6 +490,7 @@ package body Atlas.Reviews.Models is
       end if;
    end Save;
 
+   overriding
    procedure Create (Object  : in out Review_Impl;
                      Session : in out ADO.Sessions.Master_Session'Class) is
       Query : ADO.Statements.Insert_Statement
@@ -483,6 +522,7 @@ package body Atlas.Reviews.Models is
       ADO.Objects.Set_Created (Object);
    end Create;
 
+   overriding
    procedure Delete (Object  : in out Review_Impl;
                      Session : in out ADO.Sessions.Master_Session'Class) is
       Stmt : ADO.Statements.Delete_Statement

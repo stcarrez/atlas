@@ -5,7 +5,7 @@
 --  Template used: templates/model/package-body.xhtml
 --  Ada Generator: https://github.com/stcarrez/dynamo Version 1.2.3
 -----------------------------------------------------------------------
---  Copyright (C) 2021 Stephane Carrez
+--  Copyright (C) 2022 Stephane Carrez
 --  Written by Stephane Carrez (Stephane.Carrez@gmail.com)
 --
 --  Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ with Ada.Unchecked_Deallocation;
 pragma Warnings (On);
 package body Atlas.Applications.Models is
 
-   pragma Style_Checks ("-mr");
+   pragma Style_Checks ("-mrIu");
    pragma Warnings (Off, "formal parameter * is not referenced");
    pragma Warnings (Off, "use clause for type *");
    pragma Warnings (Off, "use clause for private type *");
