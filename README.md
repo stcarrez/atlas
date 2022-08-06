@@ -53,6 +53,12 @@ Then, you must setup the environment by running the following `alr` command:
 alr exec dynamo generate db uml/atlas.zargo
 ```
 
+*FreeBSD*: if you build on FreeBSD, you may have to use the following
+command if some libraries are not found:
+
+```
+alr build -- -largs -L/usr/local/lib/mariadb
+```
 
 
 ## Build with configure
@@ -70,7 +76,7 @@ Then, build the application:
 
 You will then start the application as follows:
 ```
-   bin/atlas-server setup --upload=upload
+   bin/atlas-server setup --upload=upload atlas
 ```
 
 and point your browser to http://localhost:8080/atlas/index.html
