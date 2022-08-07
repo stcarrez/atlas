@@ -13,10 +13,8 @@ DYNAMO_ARGS=db uml/atlas.zargo
 
 ROOTDIR=.
 
-$(foreach PLUGIN,$(PLUGINS),$(eval include plugins/$(PLUGIN)/Makefile))
-
 build::
-	$(GNATMAKE) -m -p -P "$(GPRPATH)" $(MAKE_ARGS)
+	$(BUILD)
 
 generate::
 	mkdir -p db
