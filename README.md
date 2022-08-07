@@ -36,7 +36,12 @@ And for the Web server you can choose between:
 
 Building with [Alire](https://github.com/alire-project/alire) is done by several
 steps with the `alr` command.  Alire will handle the dependencies and preparation
-steps to build all the requires libraries.  First, run the following `alr` commands:
+steps to build all the requires libraries.  You have the choice between two Alire crates:
+
+* `atlas` crate is using the Ada Web Server,
+* `atlas_ews` crate is using the Embedded Web Server
+
+First, run the following `alr` commands:
 
 ```
 alr get atlas
