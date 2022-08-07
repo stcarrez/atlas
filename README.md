@@ -25,8 +25,12 @@ To Atlas uses the following projects:
 * Ada Security  (https://github.com/stcarrez/ada-security)
 * Ada Keystore  (https://github.com/stcarrez/ada-keystore)
 * Dynamo        (https://github.com/stcarrez/dynamo)
-* AWS           (https://libre.adacore.com/libre/tools/aws/)
 * XMLAda        (https://libre.adacore.com/libre/tools/xmlada/)
+
+And for the Web server you can choose between:
+
+* AWS           (https://github.com/AdaCore/aws)
+* EWS           (https://github.com/simonjwright/ews)
 
 # Building Atlas
 
