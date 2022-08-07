@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/jenkins/s/https/jenkins.vacs.fr/Atlas.svg)](http://jenkins.vacs.fr/job/Atlas/)
 [![License](https://img.shields.io/badge/license-APACHE2-blue.svg)](LICENSE)
-![Commits](https://img.shields.io/github/commits-since/stcarrez/atlas/1.0.0.svg)
+![Commits](https://img.shields.io/github/commits-since/stcarrez/atlas/1.1.0.svg)
 
 Atlas is an online application that provides a blogging system,
 a question & answer area, a wiki space and a document storage space.
@@ -13,7 +13,7 @@ provided by Ada Web Application so that you can try them,
 look at their implementation and learn how you may use and extend
 [Ada Web Application](https://github.com/stcarrez/ada-awa) for your own needs.
 
-To build Atlas you will need the following projects:
+To Atlas uses the following projects:
 
 * AWA           (https://github.com/stcarrez/ada-awa)
 * ASF           (https://github.com/stcarrez/ada-asf)
@@ -25,14 +25,8 @@ To build Atlas you will need the following projects:
 * Ada Security  (https://github.com/stcarrez/ada-security)
 * Ada Keystore  (https://github.com/stcarrez/ada-keystore)
 * Dynamo        (https://github.com/stcarrez/dynamo)
-
-Atlas relies on the following external projects:
-
-* AWS      (https://libre.adacore.com/libre/tools/aws/)
-* XMLAda   (https://libre.adacore.com/libre/tools/xmlada/)
-
-Before building and configuring Atlas, you should have configured,
-built and installed all of the above projects.
+* AWS           (https://libre.adacore.com/libre/tools/aws/)
+* XMLAda        (https://libre.adacore.com/libre/tools/xmlada/)
 
 # Building Atlas
 
@@ -41,6 +35,8 @@ steps with the `alr` command.  Alire will handle the dependencies and preparatio
 steps to build all the requires libraries.  First, run the following `alr` commands:
 
 ```
+alr get atlas
+cd atlas_<version>_<commit>
 alr update
 alr build
 ```
@@ -63,12 +59,14 @@ alr build -- -largs -L/usr/local/lib/mariadb
 
 You will then start the application as follows:
 ```
-   bin/atlas-server setup --upload=upload atlas
+   bin/atlas-server -v setup --upload=upload atlas
 ```
 
 and point your browser to http://localhost:8080/atlas/index.html
 On your browser, you will first enter in the setup phase to configure
 the database and the application.
+
+*Note:* you can also run the application by using `alr run`.
 
 # Docker
 
