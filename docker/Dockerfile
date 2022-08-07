@@ -14,5 +14,5 @@ WORKDIR /usr/src/atlas
 
 EXPOSE 8080
 ENTRYPOINT ["/usr/src/atlas/bin/atlas-server"]
-CMD ["setup", "-u=upload", "atlas"]
+CMD ["-v", "setup", "-u=upload", "atlas"]
 
