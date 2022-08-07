@@ -14,7 +14,7 @@ DYNAMO_ARGS=db uml/atlas.zargo
 ROOTDIR=.
 
 build::
-	$(BUILD)
+	$(BUILD_COMMAND)
 
 generate::
 	mkdir -p db
