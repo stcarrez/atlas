@@ -106,3 +106,15 @@ setting up and building an Ada Web Application:
   * Step 3: [Review Web Application: Creating a review](https://blog.vacs.fr/vacs/blogs/post.html?post=2014/06/14/Review-Web-Application-Creating-a-review)
   * Step 4: [Review Web Application: Listing the reviews](https://blog.vacs.fr/vacs/blogs/post.html?post=2014/07/19/Review-Web-Application-Listing-the-reviews)
       
+# Other documentation
+
+The Ada Web Application programmer's guide describes how to setup the framework,
+how you can setup and design your first web application with it,
+and it provides detailed description of AWA components:
+
+  * [Ada Web Application programmer's guide](https://ada-awa.readthedocs.io/en/latest/) [PDF](https://github.com/stcarrez/ada-awa/blob/master/awa/docs/awa-book.pdf)
+  * [Ada Server Faces Programmer's Guide](https://ada-asf.readthedocs.io/en/latest/) [PDF](https://github.com/stcarrez/ada-asf/blob/master/docs/asf-book.pdf)
+  * [Ada Database Objects Programmer's Guide](https://ada-ado.readthedocs.io/en/latest/) [PDF](https://github.com/stcarrez/ada-ado/blob/master/docs/ado-book.pdf)
+  * [Ada Security Programmer's Guide](https://ada-security.readthedocs.io/en/latest/)
+  * [Ada Wiki Programmer's Guide](https://ada-wiki.readthedocs.io/en/latest/) [PDF](https://github.com/stcarrez/ada-wiki/blob/master/docs/wiki-book.pdf)
+  * [Ada Utility Library Programmer's Guide](https://ada-util.readthedocs.io/en/latest/)
