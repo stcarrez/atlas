@@ -6,11 +6,9 @@ RUN mkdir -p /usr/src \
    && export ADA_PROJECT_PATH=/usr/share/gpr \
    && cd /usr/src \
    && git clone https://github.com/stcarrez/atlas.git atlas \
-   && cd atlas \
-   && ./configure --prefix=/usr \
-   && make -s \
-   && make -s generate \
-   && make -s install
+   && make BUILD="gprbuild -m -p -Patlas" -s \
+   && make DYNAMO=dynamo -s generate \
+   && make BUILD="gprbuild -m -p -Patlas" -s install
 
 WORKDIR /usr/src/atlas
 
