@@ -1,25 +1,25 @@
 with "config";
-with "@UTIL_DIR@utilada_sys";
-with "@EL_DIR@elada";
-with "@ASF_DIR@asf";
-with "@SERVLET_DIR@servletada";
-with "@SERVLET_DIR@servletada_all";
-with "@ADO_DIR@ado";
-with "@ADO_DIR@ado_all";
-with "@AWA_DIR@awa";
-with "@AWA_DIR@awa_workspaces";
-with "@AWA_DIR@awa_mail";
-with "@AWA_DIR@awa_blogs";
-with "@AWA_DIR@awa_storages";
-with "@AWA_DIR@awa_images";
-with "@AWA_DIR@awa_questions";
-with "@AWA_DIR@awa_votes";
-with "@AWA_DIR@awa_tags";
-with "@AWA_DIR@awa_comments";
-with "@AWA_DIR@awa_jobs";
-with "@AWA_DIR@awa_counters";
-with "@AWA_DIR@awa_wikis";
-with "@AWA_DIR@awa_setup";
+with "utilada_sys";
+with "elada";
+with "asf";
+with "servletada";
+with "servletada_aws";
+with "ado";
+with "ado_all";
+with "awa";
+with "awa_workspaces";
+with "awa_mail";
+with "awa_blogs";
+with "awa_storages";
+with "awa_images";
+with "awa_questions";
+with "awa_votes";
+with "awa_tags";
+with "awa_comments";
+with "awa_jobs";
+with "awa_counters";
+with "awa_wikis";
+with "awa_setup";
 
 project atlas is
 
@@ -29,7 +29,9 @@ project atlas is
    for Object_Dir use "./" & Config'Object_Dir & "/obj";
    for Exec_Dir use "./" & Config'Exec_Dir & "/bin";
 
-   Server : ServletAda_All.Server_Type := external ("SERVER", "aws");
+   type Server_Type is ("none","ews","aws");
+
+   Server : Server_Type := external ("SERVER", "aws");
 
    case Server is
       when "aws" =>
