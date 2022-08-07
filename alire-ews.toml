@@ -5,7 +5,7 @@ authors = ["Stephane.Carrez@gmail.com"]
 licenses = "Apache-2.0"
 maintainers = ["Stephane.Carrez@gmail.com"]
 maintainers-logins = ["stcarrez"]
-project-files = ["atlas.gpr"]
+project-files = ["atlas_ews.gpr"]
 tags = ["web", "demo", "blog", "wiki", "questions", "storage"]
 website = "https://gitlab.com/stcarrez/atlas"
 executables = ["atlas"]
@@ -20,12 +20,13 @@ provided by Ada Web Application so that you can try them,
 look at their implementation and learn how you may use and extend
 [Ada Web Application](https://github.com/stcarrez/ada-awa) for your own needs.
 
-This Atlas version is using the [Ada Web Server](https://github.com/stcarrez/aws).
+This Atlas version is using the [Embedded Web Server](https://github.com/simonjwright/ews).
 """
 
 [[depends-on]]
 awa = "^2.4.0"
-servletada_aws = "any"
+ews = "any"
+servletada_ews = "any"
 ado_sqlite = "^2.3.0"
 dynamo = "1.3.0"
 
