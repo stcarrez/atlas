@@ -10,12 +10,12 @@ acc.xml
 *.gb_project
 *.project
 *.log
-atlas.gpr
 ChangeLog
 .settings
 configure.lineno
 autom4te.cache
-Makefile.conf
+alire/
+bin/
 *.txt
 *.gcov
 *.mat
