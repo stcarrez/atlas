@@ -1,4 +1,4 @@
-description = "Atlas AWA Demonstrator"
+description = "Atlas AWA Demonstrator (with Embedded Web Server)"
 name = "atlas_ews"
 version = "1.1.0"
 authors = ["Stephane.Carrez@gmail.com"]
