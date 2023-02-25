@@ -34,6 +34,9 @@ CREATE TABLE IF NOT EXISTS atlas_review (
   "reviewer_id" BIGINT NOT NULL,
   PRIMARY KEY ("id")
 );
-INSERT INTO entity_type (name) VALUES
+INSERT INTO ado_entity_type (name) VALUES
 ('mblog'), ('atlas_review')
+  ON CONFLICT DO NOTHING;
+INSERT INTO ado_version (name, version)
+  VALUES ("atlas", 1)
   ON CONFLICT DO NOTHING;

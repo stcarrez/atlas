@@ -1916,9 +1916,9 @@ INSERT INTO `awa_wiki_space` VALUES (1,'Atlas',1,5,'2015-12-05 16:13:02','[Main]
 [Installation]
 
 [Syntax MediaWiki]','',2,1);
-INSERT INTO `sequence` VALUES ('awa_message_type',3,301,100),('awa_email',21,2101,100),('awa_user',21,2101,100),('awa_session',40,4001,100),('awa_workspace',17,1701,100),('awa_acl',18,1801,100),('awa_blog',5,501,100),('mblog',15,1501,100),('awa_post',9,901,100),('awa_access_key',13,1301,100),('awa_queue',1,101,100),('awa_question',3,301,100),('awa_answer',3,301,100),('awa_rating',3,301,100),('awa_vote',4,401,100),('awa_storage_folder',7,701,100),('awa_storage',5,501,100),('awa_storage_data',5,501,100),('awa_tag',6,601,100),('awa_tagged_entity',6,601,100),('atlas_review',3,301,100),('awa_image',1,101,100),('awa_counter_definition',2,201,100),('awa_wiki_page',2,201,100),('awa_wiki_content',6,601,100),('awa_job',6,601,100),('awa_message',6,601,100);
-INSERT INTO "awa_user" (first_name, last_name, password, open_id, country, name, version, id, email_id, salt)
-   VALUES('','','','Nobody','','Atlas Installator',1,1,1, 'xxx');
+INSERT INTO `ado_sequence` VALUES ('awa_message_type',3,301,100),('awa_email',21,2101,100),('awa_user',21,2101,100),('awa_session',40,4001,100),('awa_workspace',17,1701,100),('awa_acl',18,1801,100),('awa_blog',5,501,100),('mblog',15,1501,100),('awa_post',9,901,100),('awa_access_key',13,1301,100),('awa_queue',1,101,100),('awa_question',3,301,100),('awa_answer',3,301,100),('awa_rating',3,301,100),('awa_vote',4,401,100),('awa_storage_folder',7,701,100),('awa_storage',5,501,100),('awa_storage_data',5,501,100),('awa_tag',6,601,100),('awa_tagged_entity',6,601,100),('atlas_review',3,301,100),('awa_image',1,101,100),('awa_counter_definition',2,201,100),('awa_wiki_page',2,201,100),('awa_wiki_content',6,601,100),('awa_job',6,601,100),('awa_message',6,601,100);
+INSERT INTO "awa_user" (first_name, last_name, country, name, version, id, email_id, status)
+   VALUES('','','','Atlas Installator',1,1,1, 0);
 INSERT INTO "awa_email" (id, version, email, user_id, status, last_error_date)
    VALUES (1,2,'Atlas@earth.world',1,0,'0000-00-00 00:00:00');
 INSERT INTO "awa_blog" (id, version, name, uid, create_date, workspace_id, update_date, url, format, default_image_url)
@@ -1951,10 +1951,10 @@ INSERT INTO awa_question VALUES ('2014-11-11 17:41:10','Is it possible to make a
 INSERT INTO awa_answer VALUES ('2015-12-13 18:55:36','2015-12-13 18:55:43','The new version of AWA now integrates a complete Wiki system.\r\n\r\nYou can write online documentation using several Wiki formats.\r\n\r\nThe Wiki system integrates a preview mechanism that generates nice thumbnails for the wiki pages.',0,201,2,1201,201);
 
 
-UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM entity_type WHERE name = 'awa_question') WHERE entity_type = 23;
-UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM entity_type WHERE name = 'awa_wiki_page') WHERE entity_type = 32;
-UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM entity_type WHERE name = 'awa_answer') WHERE entity_type = 26;
-UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM entity_type WHERE name = 'awa_post') WHERE entity_type = 14;
+UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM ado_entity_type WHERE name = 'awa_question') WHERE entity_type = 23;
+UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM ado_entity_type WHERE name = 'awa_wiki_page') WHERE entity_type = 32;
+UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM ado_entity_type WHERE name = 'awa_answer') WHERE entity_type = 26;
+UPDATE awa_tagged_entity SET entity_type = (SELECT id FROM ado_entity_type WHERE name = 'awa_post') WHERE entity_type = 14;
 
 INSERT INTO mblog (id, version, message, creation_date, author_id) VALUES (1, 1, 'Welcome to the Atlas Ada Web Application demonstrator!', '2017-03-18 14:29:11.84', 1);
 

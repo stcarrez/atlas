@@ -34,5 +34,6 @@ CREATE TABLE IF NOT EXISTS atlas_review (
   `reviewer_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 );
-INSERT OR IGNORE INTO entity_type (name) VALUES ("mblog");
-INSERT OR IGNORE INTO entity_type (name) VALUES ("atlas_review");
+INSERT OR IGNORE INTO ado_entity_type (name) VALUES ("mblog");
+INSERT OR IGNORE INTO ado_entity_type (name) VALUES ("atlas_review");
+INSERT OR IGNORE INTO ado_version (name, version) VALUES ("atlas", 1);

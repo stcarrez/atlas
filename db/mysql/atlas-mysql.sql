@@ -34,5 +34,6 @@ CREATE TABLE IF NOT EXISTS atlas_review (
   `reviewer_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT IGNORE INTO entity_type (name) VALUES
+INSERT IGNORE INTO ado_entity_type (name) VALUES
 ("mblog"), ("atlas_review");
+INSERT IGNORE INTO ado_version (name, version) VALUES ("atlas", 1);
