@@ -24,6 +24,7 @@ with AWA.Commands.Setup;
 with AWA.Commands.Stop;
 with AWA.Commands.List;
 with AWA.Commands.Info;
+with Awa.Commands.Migrate;
 
 with ADO.Sqlite;
 --  with ADO.Mysql;
@@ -41,8 +42,10 @@ procedure Atlas.Server is
    package Start_Command is new AWA.Commands.Start (Server_Commands);
    package Stop_Command is new AWA.Commands.Stop (Server_Commands);
    package Info_Command is new AWA.Commands.Info (Server_Commands);
+   package Migrate_Command is new AWA.Commands.Migrate (Server_Commands);
    package Setup_Command is new AWA.Commands.Setup (Start_Command);
-   pragma Unreferenced (List_Command, Start_Command, Stop_Command, Info_Command, Setup_Command);
+   pragma Unreferenced (List_Command, Start_Command, Stop_Command,
+                        Info_Command, Setup_Command, Migrate_Command);
 
    Log       : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("Atlas.Server");
    App       : constant Atlas.Applications.Application_Access
