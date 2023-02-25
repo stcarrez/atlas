@@ -1,10 +1,12 @@
-<div xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:atlas="http://code.google.com/p/ada-awa/atlas"
-     xmlns:util="http://code.google.com/p/ada-asf/util"
-     xmlns:h="http://java.sun.com/jsf/html">
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:atlas="http://code.google.com/p/ada-awa/atlas"
+                xmlns:util="http://code.google.com/p/ada-asf/util"
+                xmlns:h="http://java.sun.com/jsf/html">
+  <div class='message-form'>
     <h:form id='post-form'>
         <div class="atlas-gravatar">
-            <img src="#{atlas:gravatar(user.email)}?d=identicon"/>
+            <img src="#{atlas:gravatar(user.email)}?d=identicon&amp;s=60"/>
         </div>
         <div class='atlas-mblog'>
             <dl class="awa-required#{util:hasMessage('email') ? ' awa-error' : ''}">
@@ -27,4 +29,5 @@
             </ul>
         </div>
     </h:form>
-</div>
+  </div>
+</ui:composition>

@@ -1,15 +1,22 @@
-.atlas #awa-content {
+/*.atlas #awa-content {
     padding-top: 92px;
+}*/
+#awa-page {
+    padding-top: 2em;
 }
+.page-storages #awa-page {
+    padding-top: 0;
+}
+.EasyMDEContainer .CodeMirror pre.CodeMirror-line {
+    font-family: monospace;
+}
+
 #atlas-logo {
     position: absolute;
     right: 0;
     top: 0;
     margin-right: 20px;
     float: right;
-}
-#awa-hdr #awa-tools {
-    margin-right: 80px;
 }
 #awa-hdr #atlas-title {
     color: #26d3ff;
@@ -22,6 +29,18 @@
 .atlas-gravatar {
     float: left;
     width: 100px;
+}
+@media (max-width: 768px) {
+    .awa-menu li {
+        display: none;
+    }
+}
+
+.page-wiki .atlas-tab-wiki, .page-blog .atlas-tab-news, .page-question .atlas-tab-question, .page-reviews .atlas-tab-reviews {
+    display: block;
+}
+.awa-side-menu:checked ~ nav li {
+    display: block;
 }
 .atlas-mblog {
     float: left;
@@ -58,6 +77,10 @@ div.message {
 div.message img {
     padding: 3px;
     border: 1px solid #a6c9e2;
+}
+div.message-form {
+    float: left;
+    margin: 2%;
 }
 #forum-posts {
     margin-top: 20px;

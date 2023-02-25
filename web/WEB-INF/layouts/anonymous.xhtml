@@ -25,10 +25,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/grids/reset.css"/>
-    <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/grids/fluid_grid.css"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/asf.css"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/awa.css"/>
-    <link media="screen" type="text/css" rel="stylesheet" href="#{jquery.uiCssPath}"/>
+    <link media="screen" type="text/css" rel="stylesheet" href="#{jquery.uiCssPath}/jquery-ui.structure.css"/>
+    <link media="screen" type="text/css" rel="stylesheet" href="#{jquery.uiCssPath}/jquery-ui.theme.css"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{jquery.chosenCssPath}"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/users.css"/>
     <link media="screen" type="text/css" rel="stylesheet" href="#{contextPath}/css/comments.css"/>
@@ -40,14 +40,16 @@
     <ui:insert name="pageHeader"/>
     <title>#{title}</title>
 </head>
-<body class="atlas #{not empty pageStyle ? pageStyle : ''}">
+<body class="atlas #{not empty pageStyle ? pageStyle : ''}#{not empty top_nav ? top_nav : ''}">
 <!-- Top header with user account -->
-<ui:include src="top-bar.xhtml"/>
-
-<div id='awa-page' class='container_12'>
+<header>
+  <ui:include src="top-bar.xhtml"/>
+  <ui:insert name="pageNav"/>
+</header>
+<main id='awa-page'>
     <ui:insert name="pageBody"/>
     <div id="awa-clfooter"></div>
-</div>
+</main>
 
 <ui:include src="footer.xhtml"/>
 
