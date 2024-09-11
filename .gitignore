@@ -1,7 +1,6 @@
 *~
 *.log
 .initialized
-config.status
 auto.cgpr
 CHANGES
 access.xml
@@ -12,8 +11,6 @@ acc.xml
 *.log
 ChangeLog
 .settings
-configure.lineno
-autom4te.cache
 alire/
 bin/
 *.txt
