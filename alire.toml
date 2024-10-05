@@ -25,13 +25,12 @@ This Atlas version is using the [Ada Web Server](https://github.com/stcarrez/aws
 
 [[depends-on]]
 awa = "^2.5.0"
-servletada_aws = "any"
+servletada_aws = "*"
 ado_sqlite = "^2.4.0"
-dynamo = "^1.4.0"
-utilada = "^2.7.0"
-utilada_xml = "^2.7.0"
-utilada_aws = "^2.7.0"
-aws = "^23.0"
+dynamo = "^1.3.0"
+utilada = "^2.6.0"
+utilada_xml = "^2.6.0"
+utilada_aws = "2.6.0"
 
 [configuration]
 disabled = true
