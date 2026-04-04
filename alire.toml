@@ -34,3 +34,6 @@ utilada_aws = "^2.8.0"
 
 [configuration]
 disabled = true
+
+[[pins]]
+awa = { url = 'https://github.com/stcarrez/ada-awa.git' }
