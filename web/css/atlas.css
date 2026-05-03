@@ -2,7 +2,7 @@
     padding-top: 92px;
 }*/
 #awa-hdr {
-    height: 70px;
+    height: 137px;
     border-bottom: 5px solid #47c;
 }
 #awa-hdr-tool {
@@ -28,21 +28,23 @@
     top: 0;
     float: right;
 }
-#awa-hdr #atlas-title {
+#atlas-title {
     color: #26d3ff;
     font-weight: bold;
     font-size: 1.0em;
     width: 50%;
     float: left;
     white-space: nowrap;
+    padding-top: 40px;
     padding-left: 64px;
-    height: 38px;
+    height: 105px;
 }
 .awa-side-nav {
     margin-left: 64px;
 }
 #awa-tool-nav {
     float: right;
+    margin-right: 100px;
 }
 #awa-clfooter {
     height: 50px;
@@ -269,6 +271,16 @@ ul.review-info a, ul.review-info span {
     }
 }
 @media screen and (max-width: 768px) {
+    #atlas-fork-me {
+        display: none;
+    }
+    #awa-hdr {
+        height: 70px;
+    }
+    #atlas-title {
+        padding-top: 0;
+        height: 38px;
+    }
     #awa-tools {
         max-width: 250px;
     }
