@@ -1,8 +1,19 @@
 /*.atlas #awa-content {
     padding-top: 92px;
 }*/
+#awa-hdr {
+    height: 70px;
+    border-bottom: 5px solid #47c;
+}
+#awa-hdr-tool {
+    float: left;
+    width: 100%;
+}
 #awa-page {
     padding-top: 2em;
+}
+.awa-page-actions {
+    padding-top: 1em;
 }
 .page-storages #awa-page {
     padding-top: 0;
@@ -13,15 +24,25 @@
 
 #atlas-logo {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
-    margin-right: 20px;
     float: right;
 }
 #awa-hdr #atlas-title {
     color: #26d3ff;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.0em;
+    width: 50%;
+    float: left;
+    white-space: nowrap;
+    padding-left: 64px;
+    height: 38px;
+}
+.awa-side-nav {
+    margin-left: 64px;
+}
+#awa-tool-nav {
+    float: right;
 }
 #awa-clfooter {
     height: 50px;
@@ -30,17 +51,23 @@
     float: left;
     width: 100px;
 }
-@media (max-width: 768px) {
-    .awa-menu li {
-        display: none;
-    }
-}
-
-.page-wiki .atlas-tab-wiki, .page-blog .atlas-tab-news, .page-question .atlas-tab-question, .page-reviews .atlas-tab-reviews {
+.page-wiki .atlas-tab-wiki,
+.page-blog .atlas-tab-news,
+.page-news .atlas-tab-news,
+.page-question .atlas-tab-question,
+.page-reviews .atlas-tab-reviews {
     display: block;
 }
-.awa-side-menu:checked ~ nav li {
-    display: block;
+.page-wiki #awa-top-nav .atlas-tab-wiki a,
+.page-blog #awa-top-nav .atlas-tab-news a,
+.page-news #awa-top-nav .atlas-tab-news a,
+.page-question #awa-top-nav .atlas-tab-question a,
+.page-reviews #awa-top-nav .atlas-tab-reviews a {
+    background: #eee;
+    color: #333;
+    border-color: #eee;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 .atlas-mblog {
     float: left;
@@ -235,4 +262,25 @@ ul.review-info a, ul.review-info span {
 	padding-bottom: 5px;
     line-height: 12px;
     display: block;
+}
+@media screen and (min-width: 768px) {
+    .awa-login, .awa-logout, .awa-workspace {
+        display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    #awa-tools {
+        max-width: 250px;
+    }
+    .page-wiki .awa-side-menu:checked ~ #awa-top-nav .atlas-tab-wiki a,
+    .page-blog .awa-side-menu:checked ~ #awa-top-nav .atlas-tab-news a,
+    .page-news .awa-side-menu:checked ~ #awa-top-nav .atlas-tab-news a,
+    .page-question .awa-side-menu:checked ~ #awa-top-nav .atlas-tab-question a,
+    .page-reviews .awa-side-menu:checked ~ #awa-top-nav .atlas-tab-reviews a {
+        border-radius: 0;
+    }
+    .awa-side-nav {
+        width: calc(100% - 120px);
+        top: 38px;
+    }
 }
